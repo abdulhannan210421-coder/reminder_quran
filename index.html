@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Nūr Tilawah - Pengingat & Reader Al-Qur'an 30 Juz</title>
+    <title>Murojaah - Pengingat & Reader Al-Qur'an 30 Juz</title>
     
     <!-- Google Fonts: Plus Jakarta Sans & Amiri -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -48,23 +48,11 @@
     </script>
     
     <style>
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 4px;
-            height: 4px;
-        }
-        ::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #CBD5E1;
-            border-radius: 9999px;
-        }
-        .dark ::-webkit-scrollbar-thumb {
-            background: #334155;
-        }
+        ::-webkit-scrollbar { width: 4px; height: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 9999px; }
+        .dark ::-webkit-scrollbar-thumb { background: #334155; }
 
-        /* Glassmorphism Styles */
         .glass-card {
             background: rgba(255, 255, 255, 0.92);
             backdrop-filter: blur(16px);
@@ -101,20 +89,17 @@
             background-size: 24px 24px;
         }
 
-        /* Ring Progress */
         .progress-ring-circle {
             transition: stroke-dashoffset 0.8s cubic-bezier(0.4, 0, 0.2, 1);
             transform: rotate(-90deg);
             transform-origin: 50% 50%;
         }
 
-        /* macOS Dock Icon Magnification */
         .dock-item {
             transition: transform 0.15s cubic-bezier(0.2, 0, 0.1, 1), margin 0.15s ease-out;
             will-change: transform;
         }
 
-        /* iOS Style Toast Banner */
         .ios-toast {
             animation: ios-banner-in 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
         }
@@ -136,35 +121,33 @@
 </head>
 <body class="bg-islamic-pattern text-slate-800 dark:text-slate-100 font-sans min-h-full flex flex-col pb-32 transition-colors duration-300 antialiased selection:bg-emerald-900 selection:text-white">
 
+    <!-- Audio Basmalah Bawaan -->
+    <audio id="basmalahAudio" src="bismillah-2.mp3" preload="auto"></audio>
+
     <!-- Compact Top Navigation Header -->
     <header class="sticky top-0 z-30 glass-card border-b border-amber-100/60 dark:border-slate-800 shadow-sm transition-colors duration-300">
         <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-2 sm:py-2.5 space-y-1.5">
             
-            <!-- Row 1: Brand Logo & Dark Mode Toggle + GPS Istiwa Button -->
             <div class="flex items-center justify-between">
-                
-                <!-- CLICKABLE LOGO FOR DARK MODE TOGGLE -->
                 <button onclick="toggleDarkMode()" class="flex items-center gap-2 group text-left focus:outline-none" title="Klik Logo untuk Mode Gelap / Terang">
                     <div id="brandLogoBox" class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-emerald-900 to-emerald-600 flex items-center justify-center text-amber-300 shadow-sm ring-1 ring-amber-400/40 group-active:scale-90 transition-transform">
                         <i id="brandIcon" class="fa-solid fa-book-quran text-base sm:text-xl"></i>
                     </div>
                     <div>
                         <div class="flex items-center gap-1">
-                            <h1 class="font-extrabold text-sm sm:text-lg tracking-tight text-emerald-950 dark:text-emerald-300">Nūr Tilawah</h1>
+                            <h1 class="font-extrabold text-sm sm:text-lg tracking-tight text-emerald-950 dark:text-emerald-300">Murojaah</h1>
                             <span class="bg-amber-100 dark:bg-amber-900/60 text-amber-800 dark:text-amber-300 text-[8px] sm:text-[9px] font-bold px-1.5 py-0.2 rounded-full border border-amber-300/60">30 Juz</span>
                         </div>
                         <p class="text-[9px] text-slate-500 dark:text-slate-400 font-medium leading-none">Klik icon: <span id="themeLabel" class="font-bold text-amber-600 dark:text-amber-400">Mode Terang ☀️</span></p>
                     </div>
                 </button>
 
-                <!-- GPS Trigger Button -->
-                <button onclick="requestGPSLocation()" class="px-2 py-1 rounded-lg bg-cream-100 dark:bg-slate-800 border border-amber-200/80 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-[10px] sm:text-xs font-bold flex items-center gap-1 hover:bg-amber-50 dark:hover:bg-slate-700 transition shadow-sm" title="Deteksi Lokasi GPS untuk Jam Istiwa">
+                <button onclick="requestGPSLocation()" class="px-2 py-1 rounded-lg bg-cream-100 dark:bg-slate-800 border border-amber-200/80 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-[10px] sm:text-xs font-bold flex items-center gap-1 hover:bg-amber-50 dark:hover:bg-slate-700 transition shadow-sm" title="Deteksi Lokasi GPS untuk Jam Istiwa Persisi">
                     <i class="fa-solid fa-location-crosshairs text-amber-600 dark:text-amber-400"></i>
                     <span>GPS Istiwa</span>
                 </button>
             </div>
 
-            <!-- Row 2: Hijri Date & Dual Clocks -->
             <div class="flex items-center justify-between gap-1 pt-1 border-t border-amber-100/50 dark:border-slate-800/80 text-[10px] sm:text-xs">
                 <div class="font-arabic text-xs sm:text-sm text-emerald-900 dark:text-amber-300 font-bold leading-none truncate" id="arabicHijriText">
                     ١٤٤٨ هـ - جارٍ التحميل...
@@ -183,14 +166,13 @@
     <!-- MAIN TABBED CONTENT VIEWS -->
     <main class="flex-grow max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 py-3.5 sm:py-6">
 
-        <!-- TAB 1: BERANDA / HOME DASHBOARD -->
+        <!-- TAB 1: BERANDA -->
         <div id="tab-home" class="tab-content space-y-4 sm:space-y-6">
             
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6">
-                <!-- Hero Progress Card (7 cols) -->
+                <!-- Hero Progress Card -->
                 <div class="lg:col-span-7 glass-card-gold rounded-3xl p-4 sm:p-7 shadow-xl shadow-amber-900/5 relative overflow-hidden flex flex-col justify-between">
                     <div class="flex flex-col sm:flex-row items-center justify-between gap-4 relative z-10">
-                        <!-- Circular Progress Ring -->
                         <div class="relative w-32 h-32 sm:w-40 sm:h-40 flex-shrink-0 flex items-center justify-center">
                             <svg class="w-full h-full" viewBox="0 0 100 100">
                                 <circle class="text-amber-100 dark:text-slate-800" stroke-width="8" stroke="currentColor" fill="transparent" r="40" cx="50" cy="50"/>
@@ -204,7 +186,6 @@
                             </div>
                         </div>
 
-                        <!-- Progress Text Details -->
                         <div class="flex-1 text-center sm:text-left space-y-2">
                             <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-100/80 dark:bg-emerald-950/80 border border-emerald-300 dark:border-emerald-800 text-emerald-900 dark:text-emerald-200 text-[11px] font-semibold">
                                 <i class="fa-solid fa-bullseye text-amber-600 dark:text-amber-400"></i>
@@ -213,12 +194,12 @@
 
                             <h2 class="text-lg sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">Assalamu'alaikum!</h2>
                             <p id="progressStatusSub" class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-                                Yuk luangkan waktu untuk tilawah Al-Qur'an hari ini.
+                                Yuk luangkan waktu untuk murojaah & tilawah Al-Qur'an hari ini.
                             </p>
 
                             <div class="pt-1 flex flex-wrap items-center justify-center sm:justify-start gap-2">
-                                <button onclick="switchTab('quran')" class="px-3.5 py-2 bg-emerald-800 hover:bg-emerald-900 dark:bg-emerald-700 dark:hover:bg-emerald-600 text-white font-bold text-xs rounded-xl shadow-md transition active:scale-95 flex items-center gap-1.5">
-                                    <i class="fa-solid fa-book-open text-amber-300"></i> Baca Qur'an Sekarang
+                                <button onclick="resumeReadingNextPage()" class="px-3.5 py-2 bg-emerald-800 hover:bg-emerald-900 dark:bg-emerald-700 dark:hover:bg-emerald-600 text-white font-bold text-xs rounded-xl shadow-md transition active:scale-95 flex items-center gap-1.5">
+                                    <i class="fa-solid fa-book-open text-amber-300"></i> Lanjut Baca (Hal <span id="btnResumePageNum">1</span>)
                                 </button>
                                 <button onclick="openAddLogModal()" class="px-3 py-2 bg-white dark:bg-slate-800 hover:bg-amber-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold text-xs rounded-xl border border-amber-300 dark:border-slate-700 shadow-sm transition active:scale-95 flex items-center gap-1.5">
                                     <i class="fa-solid fa-pen-to-square text-amber-600 dark:text-amber-400"></i> Input Manual
@@ -227,7 +208,6 @@
                         </div>
                     </div>
 
-                    <!-- Progress Bar Status -->
                     <div class="mt-4 pt-2.5 border-t border-amber-200/60 dark:border-slate-800 flex items-center justify-between text-xs text-slate-600 dark:text-slate-400 relative z-10">
                         <span class="font-medium">Progres: <span id="pagesReadToday" class="font-bold text-emerald-900 dark:text-emerald-300">0</span> dari <span id="targetPagesTotal" class="font-bold text-emerald-900 dark:text-emerald-300">2</span> hal</span>
                         <span id="statusBadgeText" class="px-2 py-0.5 rounded-md font-bold bg-amber-100 text-amber-800 border border-amber-300 text-[10px]">
@@ -236,7 +216,7 @@
                     </div>
                 </div>
 
-                <!-- Alarm & Streak Overview (5 cols) -->
+                <!-- Alarm & Streak Overview -->
                 <div class="lg:col-span-5 glass-card rounded-3xl p-4 sm:p-6 shadow-xl shadow-emerald-900/5 flex flex-col justify-between border border-emerald-900/10">
                     <div>
                         <div class="flex items-center justify-between mb-3">
@@ -245,8 +225,8 @@
                                     <i class="fa-solid fa-bell text-base animate-pulse"></i>
                                 </div>
                                 <div>
-                                    <h3 class="font-bold text-slate-900 dark:text-white text-sm">Pengingat Persisten</h3>
-                                    <p class="text-[10px] text-slate-500 dark:text-slate-400">Alarm pintar harian</p>
+                                    <h3 class="font-bold text-slate-900 dark:text-white text-sm">Pengingat Murojaah</h3>
+                                    <p class="text-[10px] text-slate-500 dark:text-slate-400">Multi-jadwal harian & mingguan</p>
                                 </div>
                             </div>
                             <label class="relative inline-flex items-center cursor-pointer">
@@ -257,8 +237,8 @@
 
                         <div class="bg-cream-100/90 dark:bg-slate-800/80 rounded-2xl p-3 border border-amber-200/70 dark:border-slate-700 space-y-2">
                             <div class="flex items-center justify-between">
-                                <span class="text-xs text-slate-600 dark:text-slate-300 font-medium">Jam Alarm Harian:</span>
-                                <span id="displayAlarmTime" class="text-sm font-extrabold text-emerald-900 dark:text-emerald-300 font-mono bg-white dark:bg-slate-900 px-2.5 py-0.5 rounded-lg border border-amber-200 dark:border-slate-700">18:00</span>
+                                <span class="text-xs text-slate-600 dark:text-slate-300 font-medium">Jadwal Terdaftar:</span>
+                                <span id="displayAlarmCount" class="text-xs font-extrabold text-emerald-900 dark:text-emerald-300 font-mono bg-white dark:bg-slate-900 px-2.5 py-0.5 rounded-lg border border-amber-200 dark:border-slate-700">1 Jadwal</span>
                             </div>
                             <div class="flex items-center justify-between">
                                 <span class="text-xs text-slate-600 dark:text-slate-300 font-medium">Streak Beruntun:</span>
@@ -300,73 +280,51 @@
 
         </div>
 
-        <!-- TAB 2: QURAN READER & CATEGORIES SEARCH -->
+        <!-- TAB 2: QURAN READER -->
         <div id="tab-quran" class="tab-content hidden space-y-3">
-            
             <div class="glass-card rounded-3xl p-3.5 sm:p-5 shadow-md border border-amber-200/80 dark:border-slate-800">
                 <div class="flex items-center justify-between mb-2.5">
                     <h3 class="font-bold text-slate-900 dark:text-white text-sm sm:text-base flex items-center gap-1.5">
-                        <i class="fa-solid fa-compass text-emerald-800 dark:text-emerald-400"></i> Navigasi & Pencarian Qur'an
+                        <i class="fa-solid fa-compass text-emerald-800 dark:text-emerald-400"></i> Navigasi & Murojaah Qur'an
                     </h3>
                     <span class="text-[10px] sm:text-xs text-amber-800 dark:text-amber-300 font-bold bg-amber-100 dark:bg-amber-950/80 px-2 py-0.5 rounded-full">30 Juz / 604 Hal</span>
                 </div>
 
-                <!-- Category Selector Tabs (Neat & Balanced) -->
                 <div class="grid grid-cols-3 gap-1.5 bg-cream-100 dark:bg-slate-800 p-1 rounded-2xl border border-amber-200/60 dark:border-slate-700 mb-3 text-[11px] font-bold">
-                    <button onclick="switchQuranCategory('surah')" id="catBtn-surah" class="cat-tab-btn py-1.5 sm:py-2 px-1 text-center rounded-xl transition bg-emerald-800 text-white shadow-xs truncate">
-                        📖 Surah (114)
-                    </button>
-                    <button onclick="switchQuranCategory('juz')" id="catBtn-juz" class="cat-tab-btn py-1.5 sm:py-2 px-1 text-center rounded-xl transition bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 hover:bg-cream-50 truncate">
-                        📚 Juz (1-30)
-                    </button>
-                    <button onclick="switchQuranCategory('page')" id="catBtn-page" class="cat-tab-btn py-1.5 sm:py-2 px-1 text-center rounded-xl transition bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 hover:bg-cream-50 truncate">
-                        📄 Halaman
-                    </button>
+                    <button onclick="switchQuranCategory('surah')" id="catBtn-surah" class="cat-tab-btn py-1.5 sm:py-2 px-1 text-center rounded-xl transition bg-emerald-800 text-white shadow-xs truncate">📖 Surah (114)</button>
+                    <button onclick="switchQuranCategory('juz')" id="catBtn-juz" class="cat-tab-btn py-1.5 sm:py-2 px-1 text-center rounded-xl transition bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 hover:bg-cream-50 truncate">📚 Juz (1-30)</button>
+                    <button onclick="switchQuranCategory('page')" id="catBtn-page" class="cat-tab-btn py-1.5 sm:py-2 px-1 text-center rounded-xl transition bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 hover:bg-cream-50 truncate">📄 Halaman</button>
                 </div>
 
-                <!-- Category Panel 1: PER SURAH -->
                 <div id="quranCat-surah" class="quran-cat-panel space-y-2.5">
                     <div class="relative">
                         <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-slate-400 text-xs"></i>
                         <input type="text" id="surahSearchInput" oninput="filterSurahList(this.value)" placeholder="Cari nama surah atau nomor surah..." 
                                class="w-full pl-8 pr-3 py-1.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-500">
                     </div>
-                    <div id="surahListGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 max-h-[52vh] overflow-y-auto pr-1 pb-6">
-                        <!-- JS Populate Surahs -->
-                    </div>
+                    <div id="surahListGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 max-h-[52vh] overflow-y-auto pr-1 pb-6"></div>
                 </div>
 
-                <!-- Category Panel 2: PER JUZ -->
                 <div id="quranCat-juz" class="quran-cat-panel hidden">
-                    <div id="juzListGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 max-h-[52vh] overflow-y-auto pr-1 pb-6">
-                        <!-- JS Populate 30 Juz -->
-                    </div>
+                    <div id="juzListGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 max-h-[52vh] overflow-y-auto pr-1 pb-6"></div>
                 </div>
 
-                <!-- Category Panel 3: PER HALAMAN (Clean 3-Column Fast-Jump Grid) -->
                 <div id="quranCat-page" class="quran-cat-panel hidden space-y-3 pb-6">
                     <div class="bg-cream-50 dark:bg-slate-800 p-3 rounded-2xl border border-amber-200/80 dark:border-slate-700 flex items-center justify-between gap-2">
                         <label class="text-xs font-bold text-slate-700 dark:text-slate-300">Langsung Ke Halaman:</label>
                         <div class="flex items-center gap-1.5">
                             <input type="number" id="directPageInput" min="1" max="604" value="1" 
                                    class="w-16 px-2 py-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-extrabold text-emerald-950 dark:text-emerald-300 text-center focus:outline-none focus:ring-2 focus:ring-emerald-500">
-                            <button onclick="openQuranReaderModal(parseInt(document.getElementById('directPageInput').value))" class="px-3 py-1 bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-xs rounded-xl shadow-xs transition active:scale-95">
-                                Buka
-                            </button>
+                            <button onclick="openQuranReaderModal(parseInt(document.getElementById('directPageInput').value))" class="px-3 py-1 bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-xs rounded-xl shadow-xs transition active:scale-95">Buka</button>
                         </div>
                     </div>
 
                     <div>
                         <p class="text-xs font-bold text-slate-500 dark:text-slate-400 mb-2">Pilih Cepat Halaman Awal Juz:</p>
-                        <!-- Structured 3-Column Grid on Mobile -->
-                        <div id="quickPageGrid" class="grid grid-cols-3 sm:grid-cols-5 md:grid-cols-6 gap-2 max-h-[48vh] overflow-y-auto pr-1">
-                            <!-- JS Populate Quick Page Cards -->
-                        </div>
+                        <div id="quickPageGrid" class="grid grid-cols-3 sm:grid-cols-5 md:grid-cols-6 gap-2 max-h-[48vh] overflow-y-auto pr-1"></div>
                     </div>
                 </div>
-
             </div>
-
         </div>
 
         <!-- TAB 3: FOKUS TIMER -->
@@ -428,49 +386,48 @@
 
                 <div>
                     <h4 class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">Log Catatan Hari Ini</h4>
-                    <div id="recentLogsList" class="space-y-2 max-h-48 overflow-y-auto pr-1 pb-6">
-                        <!-- JS Insert -->
-                    </div>
+                    <div id="recentLogsList" class="space-y-2 max-h-48 overflow-y-auto pr-1 pb-6"></div>
                 </div>
             </div>
         </div>
 
-        <!-- TAB 5: PENGATURAN -->
+        <!-- TAB 5: PENGATURAN & MULTI-ALARM -->
         <div id="tab-settings" class="tab-content hidden space-y-4">
-            <div class="glass-card rounded-3xl p-5 shadow-xl max-w-md mx-auto space-y-4">
+            <div class="glass-card rounded-3xl p-5 shadow-xl max-w-md mx-auto space-y-5">
                 <h3 class="font-bold text-slate-900 dark:text-white text-sm sm:text-base flex items-center gap-2 border-b border-slate-100 dark:border-slate-800 pb-2.5">
-                    <i class="fa-solid fa-gear text-emerald-800 dark:text-emerald-400"></i> Pengaturan Target & Alarm
+                    <i class="fa-solid fa-gear text-emerald-800 dark:text-emerald-400"></i> Pengaturan Target & Multi-Alarm
                 </h3>
 
-                <form onsubmit="saveSettings(event)" class="space-y-3.5">
+                <form onsubmit="saveTargetSettings(event)" class="space-y-3">
                     <div>
                         <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Target Halaman per Hari:</label>
-                        <input type="number" id="settingTargetPages" min="1" max="604" value="2" required 
-                               class="w-full px-3.5 py-2 bg-cream-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl font-bold text-emerald-950 dark:text-emerald-300 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
-                    </div>
-
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Jam Alarm Pengingat Harian:</label>
-                        <input type="time" id="settingAlarmTime" value="18:00" required 
-                               class="w-full px-3.5 py-2 bg-cream-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl font-mono text-base font-bold text-emerald-950 dark:text-emerald-300 focus:outline-none focus:ring-2 focus:ring-emerald-500">
-                    </div>
-
-                    <div class="pt-2">
-                        <button type="submit" class="w-full py-2.5 bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-xs rounded-xl shadow-md transition active:scale-95">
-                            Simpan Perubahan
-                        </button>
+                        <div class="flex gap-2">
+                            <input type="number" id="settingTargetPages" min="1" max="604" value="2" required 
+                                   class="flex-1 px-3.5 py-2 bg-cream-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl font-bold text-emerald-950 dark:text-emerald-300 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                            <button type="submit" class="px-4 py-2 bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-xs rounded-xl shadow-md transition">Simpan</button>
+                        </div>
                     </div>
                 </form>
+
+                <div class="border-t border-slate-100 dark:border-slate-800 pt-4 space-y-3">
+                    <div class="flex items-center justify-between">
+                        <label class="text-xs font-bold text-slate-700 dark:text-slate-300">Daftar Jadwal Alarm Murojaah:</label>
+                        <button onclick="openAddAlarmModal()" class="px-2.5 py-1 bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs rounded-lg transition flex items-center gap-1">
+                            <i class="fa-solid fa-plus text-[10px]"></i> Tambah Jadwal
+                        </button>
+                    </div>
+
+                    <div id="alarmSchedulesList" class="space-y-2 max-h-52 overflow-y-auto pr-1"></div>
+                </div>
             </div>
         </div>
 
     </main>
 
 
-    <!-- macOS / iOS BOTTOM DOCK NAVIGATION BAR -->
+    <!-- macOS DOCK NAVIGATION BAR -->
     <nav class="fixed bottom-3 left-1/2 -translate-x-1/2 z-40">
         <div id="macDock" class="dock-container flex items-center gap-1.5 sm:gap-2 px-3 py-2 bg-white/80 dark:bg-slate-900/90 backdrop-blur-2xl border border-white/50 dark:border-slate-700 shadow-2xl rounded-3xl ring-1 ring-amber-200/50 dark:ring-slate-700">
-            
             <button onclick="switchTab('home')" id="dockBtn-home" class="dock-item relative group p-2.5 sm:p-3 rounded-2xl bg-emerald-800 text-white shadow-md transition flex flex-col items-center">
                 <i class="fa-solid fa-house text-lg sm:text-xl"></i>
                 <span class="absolute -top-8 bg-slate-900 text-white text-[10px] font-bold px-2 py-0.5 rounded-md opacity-0 group-hover:opacity-100 transition pointer-events-none whitespace-nowrap">Beranda</span>
@@ -478,7 +435,7 @@
 
             <button onclick="switchTab('quran')" id="dockBtn-quran" class="dock-item relative group p-2.5 sm:p-3 rounded-2xl bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:text-emerald-800 shadow-sm transition flex flex-col items-center">
                 <i class="fa-solid fa-book-quran text-lg sm:text-xl"></i>
-                <span class="absolute -top-8 bg-slate-900 text-white text-[10px] font-bold px-2 py-0.5 rounded-md opacity-0 group-hover:opacity-100 transition pointer-events-none whitespace-nowrap">Baca Qur'an</span>
+                <span class="absolute -top-8 bg-slate-900 text-white text-[10px] font-bold px-2 py-0.5 rounded-md opacity-0 group-hover:opacity-100 transition pointer-events-none whitespace-nowrap">Murojaah</span>
             </button>
 
             <button onclick="switchTab('timer')" id="dockBtn-timer" class="dock-item relative group p-2.5 sm:p-3 rounded-2xl bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:text-emerald-800 shadow-sm transition flex flex-col items-center">
@@ -495,12 +452,11 @@
                 <i class="fa-solid fa-sliders text-lg sm:text-xl"></i>
                 <span class="absolute -top-8 bg-slate-900 text-white text-[10px] font-bold px-2 py-0.5 rounded-md opacity-0 group-hover:opacity-100 transition pointer-events-none whitespace-nowrap">Pengaturan</span>
             </button>
-
         </div>
     </nav>
 
 
-    <!-- MODAL 1: FULL 30-JUZ MUSHAF QURAN READER (RTL Layout) -->
+    <!-- MODAL 1: MUSHAF QURAN READER -->
     <div id="quranReaderModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-2 sm:p-4 hidden">
         <div class="bg-cream-50 dark:bg-slate-900 rounded-3xl max-w-2xl w-full p-3 sm:p-5 shadow-2xl border border-amber-200 dark:border-slate-800 flex flex-col gap-3 max-h-[96vh] overflow-hidden">
             
@@ -514,12 +470,11 @@
                 </button>
             </div>
 
-            <!-- Image Viewport -->
             <div class="flex-1 bg-white dark:bg-slate-950 rounded-2xl border border-amber-200/80 dark:border-slate-800 p-2 flex items-center justify-center overflow-hidden min-h-[300px] relative shadow-inner">
                 <img id="mushafImage" src="" alt="Halaman Mushaf Al-Qur'an" class="max-h-[60vh] sm:max-h-[68vh] w-auto object-contain transition-opacity duration-300">
             </div>
 
-            <!-- RTL NAVIGATION BUTTONS (Next on LEFT, Prev on RIGHT) -->
+            <!-- RTL Navigation -->
             <div class="grid grid-cols-12 gap-2 pt-1">
                 <button onclick="nextQuranPage()" class="col-span-4 py-2.5 sm:py-3 bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-xs rounded-xl shadow-md transition active:scale-95 flex items-center justify-center gap-1.5">
                     <span>Lanjut (Hal <span id="nextPageNumLabel">2</span>)</span>
@@ -541,7 +496,7 @@
     </div>
 
 
-    <!-- MODAL 2: FULL PERSISTENT ALARM OVERLAY (Anti-Snooze) -->
+    <!-- MODAL 2: PERSISTENT ALARM OVERLAY -->
     <div id="persistentAlarmOverlay" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-xl flex items-center justify-center p-4 hidden">
         <div class="relative max-w-md w-full bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 shadow-2xl border-2 border-emerald-500 text-center space-y-5 animate-pulse-glow z-10">
             <div class="w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-3xl bg-gradient-to-tr from-emerald-800 to-emerald-600 text-amber-300 flex items-center justify-center text-3xl sm:text-4xl shadow-lg shadow-emerald-900/30 animate-bounce">
@@ -550,11 +505,11 @@
 
             <div class="space-y-1.5">
                 <span class="bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 text-[10px] sm:text-xs font-bold px-3 py-1 rounded-full border border-amber-300/60 uppercase tracking-widest">
-                    Waktunya Tilawah!
+                    Waktunya Murojaah!
                 </span>
                 <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white">Pengingat Al-Qur'an Harian</h2>
                 <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-                    Target membaca hari ini belum terpenuhi. Notifikasi selalu muncul sampai Anda membaca Al-Qur'an hari ini!
+                    Target membaca hari ini belum terpenuhi. Buka aplikasi untuk melanjutkan membaca Al-Qur'an!
                 </p>
             </div>
 
@@ -564,14 +519,14 @@
                     <span id="alarmModalTargetText" class="text-emerald-800 dark:text-emerald-400">2 Halaman</span>
                 </div>
                 <div class="flex justify-between text-slate-600 dark:text-slate-400">
-                    <span>Sudah Dibaca:</span>
-                    <span id="alarmModalReadText" class="font-bold">0 Halaman</span>
+                    <span>Lanjut Ke Halaman:</span>
+                    <span id="alarmModalNextPageText" class="font-bold text-amber-600 dark:text-amber-400">Halaman 1</span>
                 </div>
             </div>
 
             <div class="space-y-2 pt-1">
                 <button onclick="handleAlarmAction('read_now')" class="w-full py-3 bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-xs sm:text-sm rounded-2xl shadow-lg transition active:scale-95 flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-book-open text-amber-300"></i> Buka Al-Qur'an & Baca Sekarang
+                    <i class="fa-solid fa-book-open text-amber-300"></i> Buka Qur'an & Baca Halaman Selanjutnya
                 </button>
                 <button onclick="handleAlarmAction('confirm_done')" class="w-full py-2.5 bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs rounded-2xl transition active:scale-95">
                     ✓ Saya Sudah Membaca Hari Ini
@@ -581,7 +536,7 @@
     </div>
 
 
-    <!-- MODAL 3: ADD DETAIL LOG -->
+    <!-- MODAL 3: ADD LOG MANUAL -->
     <div id="addLogModal" class="fixed inset-0 z-40 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 hidden">
         <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-md w-full p-6 shadow-2xl border border-amber-200 dark:border-slate-800 space-y-4">
             <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
@@ -628,19 +583,50 @@
     </div>
 
 
-    <!-- CELEBRATION CONFETTI CANVAS -->
-    <canvas id="confettiCanvas" class="fixed inset-0 pointer-events-none z-50 hidden"></canvas>
+    <!-- MODAL 4: TAMBAH JADWAL ALARM MULTI-TIME -->
+    <div id="addAlarmModal" class="fixed inset-0 z-40 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+        <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-sm w-full p-5 shadow-2xl border border-amber-200 dark:border-slate-800 space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-2.5">
+                <h3 class="font-bold text-slate-900 dark:text-white text-sm flex items-center gap-2">
+                    <i class="fa-solid fa-clock text-amber-500"></i> Tambah Jadwal Alarm Baru
+                </h3>
+                <button onclick="closeAddAlarmModal()" class="text-slate-400 hover:text-slate-600 text-base">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
 
-    <!-- iOS STYLE BANNER TOAST CONTAINER -->
+            <form onsubmit="saveNewAlarmSchedule(event)" class="space-y-3">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Jam Alarm:</label>
+                    <input type="time" id="newAlarmTimeInput" value="05:00" required 
+                           class="w-full px-3.5 py-2 bg-cream-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl font-mono text-lg font-bold text-emerald-950 dark:text-emerald-300 focus:outline-none">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Label Jadwal:</label>
+                    <input type="text" id="newAlarmLabelInput" placeholder="Misal: Murojaah Subuh / Maghrib" required 
+                           class="w-full px-3 py-2 bg-cream-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs focus:outline-none">
+                </div>
+
+                <div class="pt-2 flex gap-2">
+                    <button type="button" onclick="closeAddAlarmModal()" class="flex-1 py-2 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-bold text-xs rounded-xl">Batal</button>
+                    <button type="submit" class="flex-1 py-2 bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs rounded-xl shadow-md">Tambah</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <canvas id="confettiCanvas" class="fixed inset-0 pointer-events-none z-50 hidden"></canvas>
     <div id="toastContainer" class="fixed top-4 left-1/2 -translate-x-1/2 z-50 flex flex-col gap-2 pointer-events-none max-w-sm w-full px-4"></div>
 
 
     <!-- JAVASCRIPT ENGINE -->
     <script>
         /* ==========================================================================
-           1. INDEXEDDB PERSISTENT STORAGE MODULE (With Quran Image Caching)
+           1. INDEXEDDB PERSISTENT STORAGE
            ========================================================================== */
-        const DB_NAME = 'NurTilawahDB_V6';
+        const DB_NAME = 'MurojaahDB_V1';
         const DB_VERSION = 1;
         let dbInstance = null;
 
@@ -652,15 +638,10 @@
 
                 request.onupgradeneeded = (e) => {
                     const db = e.target.result;
-                    if (!db.objectStoreNames.contains('settings')) {
-                        db.createObjectStore('settings');
-                    }
-                    if (!db.objectStoreNames.contains('logs')) {
-                        db.createObjectStore('logs', { keyPath: 'id' });
-                    }
-                    if (!db.objectStoreNames.contains('quranImages')) {
-                        db.createObjectStore('quranImages', { keyPath: 'page' });
-                    }
+                    if (!db.objectStoreNames.contains('settings')) db.createObjectStore('settings');
+                    if (!db.objectStoreNames.contains('logs')) db.createObjectStore('logs', { keyPath: 'id' });
+                    if (!db.objectStoreNames.contains('quranImages')) db.createObjectStore('quranImages', { keyPath: 'page' });
+                    if (!db.objectStoreNames.contains('alarms')) db.createObjectStore('alarms', { keyPath: 'id' });
                 };
 
                 request.onsuccess = (e) => {
@@ -727,6 +708,46 @@
             });
         }
 
+        async function dbGetAllAlarms() {
+            const db = await initDB();
+            return new Promise((resolve) => {
+                const tx = db.transaction('alarms', 'readonly');
+                const store = tx.objectStore('alarms');
+                const req = store.getAll();
+                req.onsuccess = () => {
+                    const res = req.result || [];
+                    if (res.length === 0) {
+                        const defaultAlarm = { id: 1, time: "18:00", label: "Murojaah Maghrib", enabled: true };
+                        dbAddAlarm(defaultAlarm);
+                        resolve([defaultAlarm]);
+                    } else resolve(res);
+                };
+                req.onerror = () => resolve([{ id: 1, time: "18:00", label: "Murojaah Maghrib", enabled: true }]);
+            });
+        }
+
+        async function dbAddAlarm(alarmObj) {
+            const db = await initDB();
+            return new Promise((resolve, reject) => {
+                const tx = db.transaction('alarms', 'readwrite');
+                const store = tx.objectStore('alarms');
+                const req = store.put(alarmObj);
+                req.onsuccess = () => resolve(true);
+                req.onerror = (e) => reject(e.target.error);
+            });
+        }
+
+        async function dbDeleteAlarm(id) {
+            const db = await initDB();
+            return new Promise((resolve, reject) => {
+                const tx = db.transaction('alarms', 'readwrite');
+                const store = tx.objectStore('alarms');
+                const req = store.delete(id);
+                req.onsuccess = () => resolve(true);
+                req.onerror = (e) => reject(e.target.error);
+            });
+        }
+
         async function dbGetQuranImageBlob(pageNum) {
             const db = await initDB();
             return new Promise((resolve) => {
@@ -751,16 +772,29 @@
 
 
         /* ==========================================================================
-           2. QURAN PAGE IMAGE CACHE & SILENT PREFETCHING ENGINE
+           2. AUDIO BASMALAH & PREFETCH ENGINE
            ========================================================================== */
         const inMemoryBlobUrlCache = {};
 
+        function playBasmalahSound() {
+            const audio = document.getElementById('basmalahAudio');
+            if (audio) {
+                audio.currentTime = 0;
+                audio.play().catch(err => {
+                    const playOnGesture = () => {
+                        audio.play().catch(e => {});
+                        document.removeEventListener('click', playOnGesture);
+                        document.removeEventListener('touchstart', playOnGesture);
+                    };
+                    document.addEventListener('click', playOnGesture);
+                    document.addEventListener('touchstart', playOnGesture);
+                });
+            }
+        }
+
         async function getQuranPageObjectUrl(pageNum) {
             if (pageNum < 1 || pageNum > 604) return null;
-
-            if (inMemoryBlobUrlCache[pageNum]) {
-                return inMemoryBlobUrlCache[pageNum];
-            }
+            if (inMemoryBlobUrlCache[pageNum]) return inMemoryBlobUrlCache[pageNum];
 
             const cachedBlob = await dbGetQuranImageBlob(pageNum);
             if (cachedBlob) {
@@ -776,21 +810,17 @@
                 const response = await fetch(imageUrl);
                 if (!response.ok) throw new Error("Gagal mengambil gambar");
                 const blob = await response.blob();
-
-                dbSaveQuranImageBlob(pageNum, blob).catch(err => console.log("Gagal menyimpan cache", err));
-
+                dbSaveQuranImageBlob(pageNum, blob).catch(err => {});
                 const objectUrl = URL.createObjectURL(blob);
                 inMemoryBlobUrlCache[pageNum] = objectUrl;
                 return objectUrl;
             } catch (err) {
-                console.warn(`Fallback URL untuk Halaman ${pageNum}`);
                 return imageUrl;
             }
         }
 
         async function prefetchNeighborPages(currentPage) {
-            const neighborPages = [currentPage + 1, currentPage + 2, currentPage - 1, currentPage - 2];
-            
+            const neighborPages = [currentPage + 1, currentPage + 2, currentPage - 1];
             for (const p of neighborPages) {
                 if (p >= 1 && p <= 604 && !inMemoryBlobUrlCache[p]) {
                     dbGetQuranImageBlob(p).then(async (blob) => {
@@ -815,7 +845,7 @@
 
 
         /* ==========================================================================
-           3. DARK MODE TOGGLE CONTROLLER
+           3. DARK MODE CONTROLLER
            ========================================================================== */
         let isDarkMode = false;
 
@@ -838,7 +868,7 @@
                 brandIcon.className = "fa-solid fa-moon text-base sm:text-xl text-amber-300";
             } else {
                 htmlEl.classList.remove('dark');
-                themeLabel.innerText = "Mode Terang ☀️️";
+                themeLabel.innerText = "Mode Terang ☀️";
                 themeLabel.className = "font-bold text-amber-600";
                 brandIcon.className = "fa-solid fa-book-quran text-base sm:text-xl text-amber-300";
             }
@@ -848,12 +878,9 @@
 
 
         /* ==========================================================================
-           4. ASTRONOMICAL WAKTU ISTIWA & GPS LOCATION ENGINE
+           4. PRECISE ASTRONOMICAL ISTIWA CLOCK ENGINE
            ========================================================================== */
-        let userLocation = {
-            latitude: -7.25,
-            longitude: 112.75
-        };
+        let userLocation = { latitude: -7.25, longitude: 112.75 };
 
         function requestGPSLocation() {
             if ("geolocation" in navigator) {
@@ -881,25 +908,26 @@
             const oneDay = 1000 * 60 * 60 * 24;
             const dayOfYear = Math.floor(diff / oneDay);
 
-            const B = (360 / 365) * (dayOfYear - 81) * (Math.PI / 180);
+            const B = (360 / 365.2422) * (dayOfYear - 81) * (Math.PI / 180);
             const EoT = 9.87 * Math.sin(2 * B) - 7.53 * Math.cos(B) - 1.5 * Math.sin(B);
 
-            let standardMeridian = 105;
-            if (userLocation.longitude > 112.5 && userLocation.longitude <= 127.5) standardMeridian = 120;
-            else if (userLocation.longitude > 127.5) standardMeridian = 135;
+            let stdMeridian = 105; 
+            if (userLocation.longitude > 112.5 && userLocation.longitude <= 127.5) stdMeridian = 120; 
+            else if (userLocation.longitude > 127.5) stdMeridian = 135; 
 
-            const zawalMinutesFromMidnight = 12 * 60 + (standardMeridian - userLocation.longitude) * 4 - EoT;
-            const currentLocalMinutes = dateObj.getHours() * 60 + dateObj.getMinutes() + dateObj.getSeconds() / 60;
+            const zawalHours = 12 + (stdMeridian - userLocation.longitude) / 15 - (EoT / 60);
+            const currentHours = dateObj.getHours() + dateObj.getMinutes() / 60 + dateObj.getSeconds() / 3600;
+            const diffHours = currentHours - zawalHours;
+            
+            let istiwaTotalHours = 12 + diffHours;
+            while (istiwaTotalHours < 0) istiwaTotalHours += 24;
+            while (istiwaTotalHours >= 24) istiwaTotalHours -= 24;
 
-            const diffMinutes = currentLocalMinutes - zawalMinutesFromMidnight;
-            const istiwaMinutesTotal = 12 * 60 + diffMinutes;
+            const h = Math.floor(istiwaTotalHours);
+            const m = Math.floor((istiwaTotalHours - h) * 60);
+            const s = Math.floor((((istiwaTotalHours - h) * 60) - m) * 60);
 
-            let istiwaHours = Math.floor(istiwaMinutesTotal / 60) % 24;
-            if (istiwaHours < 0) istiwaHours += 24;
-            const istiwaMinutes = Math.floor(istiwaMinutesTotal % 60);
-            const istiwaSeconds = Math.floor((istiwaMinutesTotal * 60) % 60);
-
-            return `${String(istiwaHours).padStart(2, '0')}:${String(istiwaMinutes).padStart(2, '0')}:${String(istiwaSeconds).padStart(2, '0')}`;
+            return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
         }
 
         function updateIstiwaClock() {
@@ -911,9 +939,7 @@
         function getArabicHijriDate(dateObj) {
             try {
                 const formatter = new Intl.DateTimeFormat('ar-SA-u-ca-islamic-umalqura', {
-                    day: 'numeric',
-                    month: 'long',
-                    year: 'numeric'
+                    day: 'numeric', month: 'long', year: 'numeric'
                 });
                 return formatter.format(dateObj) + ' هـ';
             } catch(e) {
@@ -923,7 +949,7 @@
 
 
         /* ==========================================================================
-           5. WEB AUDIO API SYNTHESIZER
+           5. WEB AUDIO API ALARM SYNTHESIZER
            ========================================================================== */
         let audioCtx = null;
         let alarmIntervalId = null;
@@ -936,9 +962,7 @@
                 const AudioContext = window.AudioContext || window.webkitAudioContext;
                 audioCtx = new AudioContext();
             }
-            if (audioCtx.state === 'suspended') {
-                audioCtx.resume();
-            }
+            if (audioCtx.state === 'suspended') audioCtx.resume();
             return audioCtx;
         }
 
@@ -950,19 +974,15 @@
 
                 osc.type = type;
                 osc.frequency.setValueAtTime(freq, ctx.currentTime);
-
                 gain.gain.setValueAtTime(0, ctx.currentTime);
                 gain.gain.linearRampToValueAtTime(0.25, ctx.currentTime + 0.05);
                 gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + duration);
 
                 osc.connect(gain);
                 gain.connect(ctx.destination);
-
                 osc.start();
                 osc.stop(ctx.currentTime + duration);
-            } catch(e) {
-                console.log("Audio play error", e);
-            }
+            } catch(e) {}
         }
 
         function startAlarmAudioLoop() {
@@ -1012,13 +1032,11 @@
 
                 ambientOscillator.type = 'triangle';
                 ambientOscillator.frequency.setValueAtTime(130.81, ctx.currentTime);
-
                 ambientGainNode.gain.setValueAtTime(0.0001, ctx.currentTime);
                 ambientGainNode.gain.linearRampToValueAtTime(0.08, ctx.currentTime + 2);
 
                 ambientOscillator.connect(ambientGainNode);
                 ambientGainNode.connect(ctx.destination);
-
                 ambientOscillator.start();
                 isAmbientPlaying = true;
 
@@ -1030,7 +1048,7 @@
 
 
         /* ==========================================================================
-           6. DATA SURAH & JUZ AL-QUR'AN
+           6. SURAH & JUZ DATA
            ========================================================================== */
         const ALL_SURAHS = [
             { id: 1, name: "Al-Fatihah", startPage: 1, juz: 1, verses: 7 },
@@ -1063,12 +1081,12 @@
         const appState = {
             todayStr: new Date().toISOString().split('T')[0],
             targetPages: 2,
-            alarmTime: "18:00",
             alarmEnabled: true,
             streak: 0,
             lastCompletedDate: null,
-            currentQuranPage: 1,
-            logs: []
+            lastReadPage: 1,
+            logs: [],
+            alarms: []
         };
 
         function getTodayString() {
@@ -1082,19 +1100,22 @@
                 .reduce((sum, log) => sum + log.pagesRead, 0);
         }
 
+        function getNextReadingPage() {
+            return Math.min(604, appState.lastReadPage + 1);
+        }
+
 
         /* ==========================================================================
-           7. APP INITIALIZATION & UI CONTROLLERS
+           7. APP INITIALIZATION & UI RENDERERS
            ========================================================================== */
         async function initApp() {
             await initDB();
 
             appState.targetPages = await dbGetSetting('targetPages', 2);
-            appState.alarmTime = await dbGetSetting('alarmTime', '18:00');
             appState.alarmEnabled = await dbGetSetting('alarmEnabled', true);
             appState.streak = await dbGetSetting('streak', 0);
             appState.lastCompletedDate = await dbGetSetting('lastCompletedDate', null);
-            appState.currentQuranPage = await dbGetSetting('lastReadPage', 1);
+            appState.lastReadPage = await dbGetSetting('lastReadPage', 1);
 
             isDarkMode = await dbGetSetting('darkMode', false);
             applyTheme();
@@ -1103,12 +1124,15 @@
             userLocation.longitude = await dbGetSetting('userLon', 112.75);
 
             appState.logs = await dbGetAllLogs();
+            appState.alarms = await dbGetAllAlarms();
 
             document.getElementById('arabicHijriText').innerText = getArabicHijriDate(new Date());
 
+            playBasmalahSound();
             renderUI();
             renderWeeklyChart();
             renderRecentLogs();
+            renderAlarmsList();
 
             populateSurahCategoryGrid();
             populateJuzCategoryGrid();
@@ -1138,9 +1162,10 @@
             document.getElementById('pagesReadToday').innerText = todayPages;
             document.getElementById('targetPagesTotal').innerText = targetPages;
             document.getElementById('displayTargetPages').innerText = targetPages;
-            document.getElementById('displayAlarmTime').innerText = appState.alarmTime;
             document.getElementById('alarmToggle').checked = appState.alarmEnabled;
             document.getElementById('streakCount').innerText = appState.streak;
+            document.getElementById('btnResumePageNum').innerText = getNextReadingPage();
+            document.getElementById('displayAlarmCount').innerText = `${appState.alarms.filter(a=>a.enabled).length} Jadwal`;
 
             const statusBadge = document.getElementById('statusBadgeText');
             const statusSub = document.getElementById('progressStatusSub');
@@ -1148,7 +1173,7 @@
             if (todayPages >= targetPages) {
                 statusBadge.innerText = 'Target Tuntas! 🎉';
                 statusBadge.className = 'px-2 py-0.5 rounded-md font-bold bg-emerald-100 dark:bg-emerald-950 text-emerald-900 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800 text-[10px]';
-                statusSub.innerText = 'Alhamdulillah! Target tilawah hari ini sudah tercapai.';
+                statusSub.innerText = 'Alhamdulillah! Target murojaah hari ini sudah tuntas.';
                 checkAndIncrementStreak();
             } else {
                 statusBadge.innerText = 'Belum Selesai';
@@ -1171,7 +1196,7 @@
 
 
         /* ==========================================================================
-           8. macOS DOCK MAGNIFICATION EFFECT & TAB SWITCHING
+           8. NAVIGATION & RESUME NEXT PAGE
            ========================================================================== */
         function switchTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
@@ -1186,9 +1211,13 @@
                 activeBtn.className = 'dock-item relative group p-2.5 sm:p-3 rounded-2xl bg-emerald-800 text-white shadow-md transition flex flex-col items-center';
             }
 
-            if (tabId === 'stats') {
-                setTimeout(renderWeeklyChart, 100);
-            }
+            if (tabId === 'stats') setTimeout(renderWeeklyChart, 100);
+        }
+
+        function resumeReadingNextPage() {
+            const nextPage = getNextReadingPage();
+            switchTab('quran');
+            openQuranReaderModal(nextPage);
         }
 
         function setupDockMagnification() {
@@ -1201,7 +1230,6 @@
                     const itemRect = item.getBoundingClientRect();
                     const itemCenter = itemRect.left + itemRect.width / 2;
                     const distance = Math.abs(mouseX - itemCenter);
-                    
                     const maxDistance = 80;
                     if (distance < maxDistance) {
                         const scale = 1 + 0.35 * (1 - distance / maxDistance);
@@ -1219,7 +1247,7 @@
 
 
         /* ==========================================================================
-           9. QURAN READER & CATEGORIES SEARCH
+           9. QURAN MUSHAF READER & SEARCH
            ========================================================================== */
         function switchQuranCategory(cat) {
             document.querySelectorAll('.quran-cat-panel').forEach(p => p.classList.add('hidden'));
@@ -1293,8 +1321,8 @@
         }
 
         function openQuranReaderModal(pageNum) {
-            appState.currentQuranPage = Math.max(1, Math.min(604, pageNum || appState.currentQuranPage));
-            loadQuranPageImage(appState.currentQuranPage);
+            appState.lastReadPage = Math.max(1, Math.min(604, pageNum || appState.lastReadPage));
+            loadQuranPageImage(appState.lastReadPage);
             document.getElementById('quranReaderModal').classList.remove('hidden');
         }
 
@@ -1317,33 +1345,35 @@
             document.getElementById('prevPageNumLabel').innerText = Math.max(1, pageNum - 1);
 
             dbSetSetting('lastReadPage', pageNum);
+            renderUI();
             prefetchNeighborPages(pageNum);
         }
 
         function nextQuranPage() {
-            if (appState.currentQuranPage < 604) {
-                appState.currentQuranPage++;
-                loadQuranPageImage(appState.currentQuranPage);
+            if (appState.lastReadPage < 604) {
+                appState.lastReadPage++;
+                loadQuranPageImage(appState.lastReadPage);
             }
         }
 
         function prevQuranPage() {
-            if (appState.currentQuranPage > 1) {
-                appState.currentQuranPage--;
-                loadQuranPageImage(appState.currentQuranPage);
+            if (appState.lastReadPage > 1) {
+                appState.lastReadPage--;
+                loadQuranPageImage(appState.lastReadPage);
             }
         }
 
         async function markCurrentPageRead() {
-            await addQuickPagesLog(1, `Tilawah Halaman ${appState.currentQuranPage}`);
-            showToast(`Halaman ${appState.currentQuranPage} berhasil dicatat!`, "info");
+            await addQuickPagesLog(1, `Murojaah Halaman ${appState.lastReadPage}`);
+            showToast(`Halaman ${appState.lastReadPage} dicatat!`, "info");
         }
 
 
         /* ==========================================================================
-           10. PERSISTENT ALARM ENGINE (Anti-Snooze)
+           10. MULTI-ALARM SCHEDULER ENGINE
            ========================================================================== */
         let isAlarmOverlayOpen = false;
+        let lastTriggeredHM = "";
 
         function checkAlarmTrigger() {
             if (!appState.alarmEnabled) return;
@@ -1356,15 +1386,21 @@
             const now = new Date();
             const currentHM = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
 
-            if (currentHM >= appState.alarmTime && !isAlarmOverlayOpen) {
-                triggerPersistentAlarm();
+            if (currentHM === lastTriggeredHM) return;
+
+            const activeAlarms = appState.alarms.filter(a => a.enabled);
+            const matchedAlarm = activeAlarms.find(a => a.time === currentHM);
+
+            if (matchedAlarm && !isAlarmOverlayOpen) {
+                lastTriggeredHM = currentHM;
+                triggerPersistentAlarm(false, matchedAlarm.label);
             }
         }
 
-        function triggerPersistentAlarm(isSimulation = false) {
+        function triggerPersistentAlarm(isSimulation = false, labelText = "Pengingat Murojaah") {
             isAlarmOverlayOpen = true;
             document.getElementById('alarmModalTargetText').innerText = `${appState.targetPages} Halaman`;
-            document.getElementById('alarmModalReadText').innerText = `${calculateTodayPages()} Halaman`;
+            document.getElementById('alarmModalNextPageText').innerText = `Halaman ${getNextReadingPage()}`;
             document.getElementById('persistentAlarmOverlay').classList.remove('hidden');
             startAlarmAudioLoop();
             if (isSimulation) showToast("Simulasi alarm dipicu", "info");
@@ -1379,8 +1415,7 @@
         function handleAlarmAction(action) {
             if (action === 'read_now') {
                 dismissAlarmOverlay();
-                switchTab('quran');
-                openQuranReaderModal(appState.currentQuranPage);
+                resumeReadingNextPage();
             } else if (action === 'confirm_done') {
                 addQuickPagesLog(appState.targetPages, 'Selesai Target Alarm');
                 dismissAlarmOverlay();
@@ -1396,15 +1431,13 @@
 
 
         /* ==========================================================================
-           11. LOGS & SETTINGS
+           11. LOGS & MULTI-ALARM MANAGEMENT
            ========================================================================== */
-        function openAddLogModal() {
-            document.getElementById('addLogModal').classList.remove('hidden');
-        }
+        function openAddLogModal() { document.getElementById('addLogModal').classList.remove('hidden'); }
+        function closeAddLogModal() { document.getElementById('addLogModal').classList.add('hidden'); }
 
-        function closeAddLogModal() {
-            document.getElementById('addLogModal').classList.add('hidden');
-        }
+        function openAddAlarmModal() { document.getElementById('addAlarmModal').classList.remove('hidden'); }
+        function closeAddAlarmModal() { document.getElementById('addAlarmModal').classList.add('hidden'); }
 
         async function addQuickPagesLog(count, notesText) {
             const today = getTodayString();
@@ -1443,20 +1476,79 @@
             showToast(`Berhasil mencatat ${pages} halaman!`, 'info');
         }
 
-        async function saveSettings(e) {
+        async function saveTargetSettings(e) {
             e.preventDefault();
             const newTarget = parseInt(document.getElementById('settingTargetPages').value, 10);
-            const newTime = document.getElementById('settingAlarmTime').value;
-
             appState.targetPages = newTarget;
-            appState.alarmTime = newTime;
-
             await dbSetSetting('targetPages', newTarget);
-            await dbSetSetting('alarmTime', newTime);
-
             renderUI();
             renderWeeklyChart();
-            showToast("Pengaturan disimpan!", "info");
+            showToast("Target harian disimpan!", "info");
+        }
+
+        async function saveNewAlarmSchedule(e) {
+            e.preventDefault();
+            const timeVal = document.getElementById('newAlarmTimeInput').value;
+            const labelVal = document.getElementById('newAlarmLabelInput').value.trim();
+
+            const newAlarm = {
+                id: Date.now(),
+                time: timeVal,
+                label: labelVal || "Murojaah",
+                enabled: true
+            };
+
+            await dbAddAlarm(newAlarm);
+            appState.alarms.push(newAlarm);
+            closeAddAlarmModal();
+            renderUI();
+            renderAlarmsList();
+            showToast("Jadwal alarm baru ditambahkan!", "info");
+        }
+
+        function renderAlarmsList() {
+            const container = document.getElementById('alarmSchedulesList');
+            if (!container) return;
+
+            if (appState.alarms.length === 0) {
+                container.innerHTML = `<p class="text-xs text-slate-400 italic py-1">Belum ada jadwal alarm.</p>`;
+                return;
+            }
+
+            container.innerHTML = appState.alarms.map(alarm => `
+                <div class="flex items-center justify-between p-2.5 rounded-xl bg-cream-50 dark:bg-slate-800 border border-amber-200/80 dark:border-slate-700 text-xs">
+                    <div class="flex items-center gap-2.5">
+                        <span class="font-mono font-extrabold text-sm text-emerald-900 dark:text-emerald-300 bg-white dark:bg-slate-900 px-2 py-0.5 rounded-lg border border-slate-200 dark:border-slate-700">${alarm.time}</span>
+                        <span class="font-bold text-slate-700 dark:text-slate-200">${alarm.label}</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" onchange="toggleSingleAlarm(${alarm.id}, this.checked)" ${alarm.enabled ? 'checked' : ''} class="sr-only peer">
+                            <div class="w-8 h-4 bg-slate-200 dark:bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-emerald-600"></div>
+                        </label>
+                        <button onclick="deleteAlarmSchedule(${alarm.id})" class="text-slate-300 hover:text-red-500 transition px-1">
+                            <i class="fa-solid fa-trash-can text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        async function toggleSingleAlarm(id, enabled) {
+            const alarm = appState.alarms.find(a => a.id === id);
+            if (alarm) {
+                alarm.enabled = enabled;
+                await dbAddAlarm(alarm);
+                renderUI();
+            }
+        }
+
+        async function deleteAlarmSchedule(id) {
+            await dbDeleteAlarm(id);
+            appState.alarms = appState.alarms.filter(a => a.id !== id);
+            renderUI();
+            renderAlarmsList();
+            showToast("Jadwal alarm dihapus", "info");
         }
 
         function renderRecentLogs() {
@@ -1545,8 +1637,7 @@
                         showToast("Sesi fokus membaca selesai!", "info");
                         btn.innerHTML = `<i class="fa-solid fa-play"></i> Mulai Timer`;
                         badge.innerText = 'Selesai';
-                        switchTab('quran');
-                        openQuranReaderModal(appState.currentQuranPage);
+                        resumeReadingNextPage();
                     }
                 }, 1000);
             }
@@ -1560,21 +1651,12 @@
 
 
         /* ==========================================================================
-           13. DAILY VERSES COLLECTION & CANVAS CHART
+           13. VERSES & CANVAS CHART
            ========================================================================== */
         const VERSES_COLLECTION = [
-            {
-                arabic: "إِنَّ هَٰذَا الْقُرْآنَ يَهْدِي لِلَّتِي هِيَ أَقْوَمُ",
-                translation: "Sungguh, Al-Qur'an ini memberikan petunjuk kepada (jalan) yang lebih lurus..."
-            },
-            {
-                arabic: "وَوَرَتِّلِ الْقُرْآنَ تَرْتِيلًا",
-                translation: "Dan bacalah Al-Qur'an itu dengan perlahan-lahan (tartil)."
-            },
-            {
-                arabic: "خَيْرُكُمْ مَنْ تَعَلَّمَ الْقُرْآنَ وَعَلَّمَهُ",
-                translation: "Sebaik-baik kalian adalah orang yang mempelajari Al-Qur'an dan mengajarkannya."
-            }
+            { arabic: "إِنَّ هَٰذَا الْقُرْآنَ يَهْدِي لِلَّتِي هِيَ أَقْوَمُ", translation: "Sungguh, Al-Qur'an ini memberikan petunjuk kepada (jalan) yang lebih lurus..." },
+            { arabic: "وَوَرَتِّلِ الْقُرْآنَ تَرْتِيلًا", translation: "Dan bacalah Al-Qur'an itu dengan perlahan-lahan (tartil)." },
+            { arabic: "خَيْرُكُمْ مَنْ تَعَلَّمَ الْقُرْآنَ وَعَلَّمَهُ", translation: "Sebaik-baik kalian adalah orang yang mempelajari Al-Qur'an dan mengajarkannya." }
         ];
 
         function refreshDailyVerse() {
@@ -1640,7 +1722,7 @@
 
 
         /* ==========================================================================
-           14. iOS STYLE TOAST & CONFETTI
+           14. TOAST & CONFETTI
            ========================================================================== */
         function showToast(message, type = 'info') {
             const container = document.getElementById('toastContainer');
