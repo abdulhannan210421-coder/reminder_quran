@@ -1571,7 +1571,7 @@
 
 
         /* ==========================================================================
-           10. MULTI-ALARM SCHEDULER ENGINE
+           10. MULTI-ALARM SCHEDULER ENGINE & KODULAR CLOSE SIGNAL
            ========================================================================== */
         let isAlarmOverlayOpen = false;
         let lastTriggeredHM = "";
@@ -1615,10 +1615,16 @@
             if (isSimulation) showToast("Simulasi alarm dipicu", "info");
         }
 
+        /* FUNGSI DISMISS DENGAN PENGIRIMAN SINYAL CLOSE_FLOATING KE KODULAR */
         function dismissAlarmOverlay() {
             isAlarmOverlayOpen = false;
             stopAlarmAudioLoop();
             document.getElementById('persistentAlarmOverlay').classList.add('hidden');
+
+            // Kirim sinyal ke Kodular (Web_Viewer2) untuk menutup floating view dan mematikan Player1
+            if (window.AppInventor) {
+                window.AppInventor.setWebViewString("CLOSE_FLOATING");
+            }
         }
 
         function handleAlarmAction(action) {
