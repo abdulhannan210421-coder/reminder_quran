@@ -413,12 +413,12 @@
                 </h3>
 
                 <!-- Tombol Buka Panduan Izin HP -->
-                <button onclick="openPermissionGuideModal()" class="w-full py-2.5 px-3.5 bg-gradient-to-r from-emerald-900 to-emerald-700 text-white font-bold text-xs rounded-2xl shadow-md transition active:scale-95 flex items-center justify-between">
-                    <div class="flex items-center gap-2">
-                        <i class="fa-solid fa-shield-halved text-amber-300 text-base"></i>
+                <button onclick="openPermissionGuideModal()" class="w-full py-3 px-4 bg-gradient-to-r from-emerald-900 to-emerald-700 text-white font-bold text-xs rounded-2xl shadow-md transition active:scale-95 flex items-center justify-between">
+                    <div class="flex items-center gap-2.5">
+                        <i class="fa-solid fa-shield-halved text-amber-300 text-lg"></i>
                         <span class="text-left">
-                            <span class="block font-bold">Panduan Izin Alarm HP</span>
-                            <span class="block text-[10px] text-emerald-200 font-normal">Agar alarm selalu muncul walau app ditutup</span>
+                            <span class="block font-bold text-sm">Pengaturan Izin Alarm HP</span>
+                            <span class="block text-[10px] text-emerald-200 font-normal">Klik untuk membuka halaman pengaturan Android</span>
                         </span>
                     </div>
                     <i class="fa-solid fa-chevron-right text-xs text-amber-300"></i>
@@ -482,52 +482,47 @@
     </nav>
 
 
-    <!-- MODAL SPECIAL: PANDUAN IZIN HP AUTOMATIC ONBOARDING -->
+    <!-- MODAL AUTOMATIC ANDROID INTENT PERMISSION GUIDE -->
     <div id="permissionGuideModal" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-4 hidden">
         <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-md w-full p-5 sm:p-6 shadow-2xl border-2 border-emerald-500 flex flex-col gap-4 max-h-[92vh] overflow-y-auto">
             <div class="text-center space-y-1">
                 <div class="w-12 h-12 rounded-2xl bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 mx-auto flex items-center justify-center text-xl font-bold">
                     <i class="fa-solid fa-bell-ring"></i>
                 </div>
-                <h3 class="font-extrabold text-slate-900 dark:text-white text-base">Agar Alarm Berbunyi Otomatis</h3>
-                <p class="text-xs text-slate-500 dark:text-slate-400">Mohon aktifkan 2 izin penting ini di HP Anda agar sistem Android tidak mematikan alarm saat aplikasi ditutup:</p>
+                <h3 class="font-extrabold text-slate-900 dark:text-white text-base">Agar Alarm Selalu Berbunyi Otomatis</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400">Klik tombol di bawah ini untuk mengaktifkan izin notifikasi & membuka halaman pengaturan baterai HP Anda:</p>
             </div>
 
-            <div class="space-y-3">
-                <!-- Step 1 -->
-                <div class="p-3 bg-cream-50 dark:bg-slate-800 rounded-2xl border border-amber-200/80 dark:border-slate-700 text-xs space-y-1">
-                    <div class="flex items-center gap-2 font-bold text-emerald-950 dark:text-emerald-300">
-                        <span class="w-5 h-5 rounded-full bg-emerald-800 text-white flex items-center justify-center text-[10px]">1</span>
-                        <span>Izinkan Notifikasi HP</span>
+            <div class="space-y-2.5">
+                <!-- Tombol Direct Action 1 -->
+                <button onclick="grantSystemNotifications()" class="w-full py-3 px-4 bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-xs rounded-2xl shadow-md transition active:scale-95 flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <span class="w-6 h-6 rounded-full bg-emerald-700 text-amber-300 flex items-center justify-center font-bold text-xs">1</span>
+                        <span class="text-left">Aktifkan Pop-up Izin Notifikasi</span>
                     </div>
-                    <p class="text-slate-600 dark:text-slate-300 pl-7">Klik tombol hijau di bawah untuk mengizinkan aplikasi mengirimkan notifikasi suara & banner.</p>
-                </div>
-
-                <!-- Step 2 -->
-                <div class="p-3 bg-cream-50 dark:bg-slate-800 rounded-2xl border border-amber-200/80 dark:border-slate-700 text-xs space-y-1">
-                    <div class="flex items-center gap-2 font-bold text-emerald-950 dark:text-emerald-300">
-                        <span class="w-5 h-5 rounded-full bg-emerald-800 text-white flex items-center justify-center text-[10px]">2</span>
-                        <span>Matikan Penghemat Baterai (Baterai Unrestricted)</span>
-                    </div>
-                    <p class="text-slate-600 dark:text-slate-300 pl-7">Buka <strong>Pengaturan HP &rarr; Aplikasi &rarr; Murojaah &rarr; Baterai</strong>, ubah menjadi <strong>Tanpa Batasan / Unrestricted</strong>.</p>
-                </div>
-
-                <!-- Step 3 (Khusus Xiaomi, Oppo, Vivo) -->
-                <div class="p-3 bg-cream-50 dark:bg-slate-800 rounded-2xl border border-amber-200/80 dark:border-slate-700 text-xs space-y-1">
-                    <div class="flex items-center gap-2 font-bold text-emerald-950 dark:text-emerald-300">
-                        <span class="w-5 h-5 rounded-full bg-emerald-800 text-white flex items-center justify-center text-[10px]">3</span>
-                        <span>Mulai Otomatis / Autostart (Xiaomi, Oppo, Vivo)</span>
-                    </div>
-                    <p class="text-slate-600 dark:text-slate-300 pl-7">Aktifkan sakelar <strong>Autostart / Mulai Otomatis</strong> dan <strong>Tampilkan di Atas Aplikasi Lain</strong>.</p>
-                </div>
-            </div>
-
-            <div class="space-y-2 pt-2 border-t border-slate-100 dark:border-slate-800">
-                <button onclick="grantSystemNotifications()" class="w-full py-3 bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-xs rounded-2xl shadow-md transition active:scale-95 flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-check"></i> Aktifkan Izin Notifikasi HP
+                    <i class="fa-solid fa-circle-check text-amber-300 text-sm"></i>
                 </button>
+
+                <!-- Tombol Direct Action 2: Memicu Android Intent Langsung Buka Settings HP -->
+                <button onclick="openAndroidSystemSettings()" class="w-full py-3 px-4 bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs rounded-2xl shadow-md transition active:scale-95 flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <span class="w-6 h-6 rounded-full bg-amber-600 text-white flex items-center justify-center font-bold text-xs">2</span>
+                        <span class="text-left truncate">
+                            <span class="block font-bold">Buka Pengaturan HP (Baterai)</span>
+                            <span class="block text-[9px] text-amber-100 font-normal">Pilih 'Tanpa Batasan / Unrestricted'</span>
+                        </span>
+                    </div>
+                    <i class="fa-solid fa-up-right-from-square text-xs"></i>
+                </button>
+            </div>
+
+            <p class="text-[10px] text-slate-400 text-center italic leading-tight">
+                *Demi keamanan, sistem Android mewajibkan Anda menggeser sakelar Baterai secara manual setelah halaman dibuka.
+            </p>
+
+            <div class="pt-2 border-t border-slate-100 dark:border-slate-800">
                 <button onclick="closePermissionGuideModal()" class="w-full py-2.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-300 font-bold text-xs rounded-2xl transition">
-                    Saya Sudah Mengaturnya / Tutup
+                    Saya Sudah Selesai Mengaturnya / Tutup
                 </button>
             </div>
         </div>
@@ -725,7 +720,7 @@
         /* ==========================================================================
            1. INDEXEDDB PERSISTENT STORAGE
            ========================================================================== */
-        const DB_NAME = 'MurojaahDB_V3';
+        const DB_NAME = 'MurojaahDB_V4';
         const DB_VERSION = 1;
         let dbInstance = null;
 
@@ -944,7 +939,7 @@
 
 
         /* ==========================================================================
-           3. DARK MODE & PERMISSION ONBOARDING
+           3. DARK MODE & AUTOMATIC ANDROID SYSTEM SETTINGS INTENT
            ========================================================================== */
         let isDarkMode = false;
 
@@ -990,13 +985,24 @@
                     if (permission === "granted") {
                         showToast("Izin Notifikasi HP Diberikan! 🎉", "success");
                     } else {
-                        showToast("Izin notifikasi ditolak oleh sistem HP", "info");
+                        showToast("Izin notifikasi telah diminta", "info");
                     }
                 });
             } else {
-                showToast("Notifikasi native siap digunakan", "info");
+                showToast("Sistem notifikasi siap", "info");
             }
-            closePermissionGuideModal();
+        }
+
+        /* FUNGSI OTOMATIS MEMBUKA PENGATURAN HP ANDROID VIA INTENT */
+        function openAndroidSystemSettings() {
+            const packageName = "com.murojaah.hannan";
+            try {
+                // Memicu Android Intent untuk langsung membuka halaman App Info / Baterai aplikasi ini
+                window.location.href = `intent:#Intent;action=android.settings.APPLICATION_DETAILS_SETTINGS;data=package:${packageName};end`;
+                showToast("Membuka Pengaturan HP...", "info");
+            } catch(e) {
+                showToast("Silakan buka Pengaturan HP -> Aplikasi -> Murojaah", "info");
+            }
         }
 
 
