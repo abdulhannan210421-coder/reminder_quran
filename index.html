@@ -142,7 +142,7 @@
                     </div>
                 </button>
 
-                <button onclick="requestGPSLocation()" class="px-2 py-1 rounded-lg bg-cream-100 dark:bg-slate-800 border border-amber-200/80 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-[10px] sm:text-xs font-bold flex items-center gap-1 hover:bg-amber-50 dark:hover:bg-slate-700 transition shadow-sm" title="Deteksi Lokasi GPS untuk Jam Istiwa Persisi">
+                <button onclick="requestGPSLocation()" class="px-2.5 py-1 rounded-xl bg-cream-100 dark:bg-slate-800 border border-amber-200/80 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-[10px] sm:text-xs font-bold flex items-center gap-1.5 hover:bg-amber-50 dark:hover:bg-slate-700 transition shadow-sm" title="Deteksi Lokasi GPS untuk Jam Istiwa Presisi">
                     <i class="fa-solid fa-location-crosshairs text-amber-600 dark:text-amber-400"></i>
                     <span>GPS Istiwa</span>
                 </button>
@@ -226,7 +226,7 @@
                                 </div>
                                 <div>
                                     <h3 class="font-bold text-slate-900 dark:text-white text-sm">Pengingat Murojaah</h3>
-                                    <p class="text-[10px] text-slate-500 dark:text-slate-400">Multi-jadwal harian & mingguan</p>
+                                    <p class="text-[10px] text-slate-500 dark:text-slate-400">Multi-jadwal harian & fleksibel</p>
                                 </div>
                             </div>
                             <label class="relative inline-flex items-center cursor-pointer">
@@ -293,7 +293,7 @@
                 <div class="grid grid-cols-3 gap-1.5 bg-cream-100 dark:bg-slate-800 p-1 rounded-2xl border border-amber-200/60 dark:border-slate-700 mb-3 text-[11px] font-bold">
                     <button onclick="switchQuranCategory('surah')" id="catBtn-surah" class="cat-tab-btn py-1.5 sm:py-2 px-1 text-center rounded-xl transition bg-emerald-800 text-white shadow-xs truncate">📖 Surah (114)</button>
                     <button onclick="switchQuranCategory('juz')" id="catBtn-juz" class="cat-tab-btn py-1.5 sm:py-2 px-1 text-center rounded-xl transition bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 hover:bg-cream-50 truncate">📚 Juz (1-30)</button>
-                    <button onclick="switchQuranCategory('page')" id="catBtn-page" class="cat-tab-btn py-1.5 sm:py-2 px-1 text-center rounded-xl transition bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 hover:bg-cream-50 truncate">📄 Halaman</button>
+                    <button onclick="switchQuranCategory('page')" id="catBtn-page" class="cat-tab-btn py-1.5 sm:py-2 px-1 text-center rounded-xl transition bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 hover:bg-cream-50 truncate">📄 Halaman (1-604)</button>
                 </div>
 
                 <div id="quranCat-surah" class="quran-cat-panel space-y-2.5">
@@ -309,19 +309,33 @@
                     <div id="juzListGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 max-h-[52vh] overflow-y-auto pr-1 pb-6"></div>
                 </div>
 
+                <!-- CATEGORY PANEL 3: PURE PAGES 1 TO 604 GRID -->
                 <div id="quranCat-page" class="quran-cat-panel hidden space-y-3 pb-6">
-                    <div class="bg-cream-50 dark:bg-slate-800 p-3 rounded-2xl border border-amber-200/80 dark:border-slate-700 flex items-center justify-between gap-2">
-                        <label class="text-xs font-bold text-slate-700 dark:text-slate-300">Langsung Ke Halaman:</label>
-                        <div class="flex items-center gap-1.5">
-                            <input type="number" id="directPageInput" min="1" max="604" value="1" 
-                                   class="w-16 px-2 py-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-extrabold text-emerald-950 dark:text-emerald-300 text-center focus:outline-none focus:ring-2 focus:ring-emerald-500">
-                            <button onclick="openQuranReaderModal(parseInt(document.getElementById('directPageInput').value))" class="px-3 py-1 bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-xs rounded-xl shadow-xs transition active:scale-95">Buka</button>
+                    <div class="bg-cream-50 dark:bg-slate-800 p-3 rounded-2xl border border-amber-200/80 dark:border-slate-700 space-y-2">
+                        <div class="flex items-center justify-between gap-2">
+                            <label class="text-xs font-bold text-slate-700 dark:text-slate-300">Langsung Ke Nomor Halaman:</label>
+                            <div class="flex items-center gap-1.5">
+                                <input type="number" id="directPageInput" min="1" max="604" value="1" oninput="filterPagesGridByInput(this.value)"
+                                       class="w-20 px-2.5 py-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-extrabold text-emerald-950 dark:text-emerald-300 text-center focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                                <button onclick="openQuranReaderModal(parseInt(document.getElementById('directPageInput').value))" class="px-3.5 py-1 bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-xs rounded-xl shadow-xs transition active:scale-95">Buka</button>
+                            </div>
+                        </div>
+
+                        <!-- Filter Cepat Rentang Juz -->
+                        <div class="flex items-center gap-1 overflow-x-auto pb-1 pt-1 text-[10px] no-scrollbar">
+                            <span class="font-bold text-slate-500 shrink-0 mr-1">Filter Juz:</span>
+                            <button onclick="filterPagesByJuz(null)" class="juz-filter-btn px-2 py-0.5 rounded-lg bg-emerald-800 text-white font-bold shrink-0">Semua (1-604)</button>
+                            <script>
+                                for(let j=1; j<=30; j++) {
+                                    document.write(`<button onclick="filterPagesByJuz(${j})" class="juz-filter-btn px-2 py-0.5 rounded-lg bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 font-semibold border border-slate-200 dark:border-slate-700 shrink-0 hover:bg-amber-50">Juz ${j}</button>`);
+                                }
+                            </script>
                         </div>
                     </div>
 
-                    <div>
-                        <p class="text-xs font-bold text-slate-500 dark:text-slate-400 mb-2">Pilih Cepat Halaman Awal Juz:</p>
-                        <div id="quickPageGrid" class="grid grid-cols-3 sm:grid-cols-5 md:grid-cols-6 gap-2 max-h-[48vh] overflow-y-auto pr-1"></div>
+                    <!-- Murni Grid 604 Halaman -->
+                    <div id="quickPageGrid" class="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 gap-2 max-h-[50vh] overflow-y-auto pr-1">
+                        <!-- JS Populate 604 Page Tiles -->
                     </div>
                 </div>
             </div>
@@ -412,7 +426,7 @@
                 <div class="border-t border-slate-100 dark:border-slate-800 pt-4 space-y-3">
                     <div class="flex items-center justify-between">
                         <label class="text-xs font-bold text-slate-700 dark:text-slate-300">Daftar Jadwal Alarm Murojaah:</label>
-                        <button onclick="openAddAlarmModal()" class="px-2.5 py-1 bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs rounded-lg transition flex items-center gap-1">
+                        <button onclick="openAddAlarmModal()" class="px-3 py-1.5 bg-gradient-to-r from-amber-500 to-gold-500 hover:from-amber-600 text-white font-bold text-xs rounded-xl transition shadow-md flex items-center gap-1.5">
                             <i class="fa-solid fa-plus text-[10px]"></i> Tambah Jadwal
                         </button>
                     </div>
@@ -583,36 +597,57 @@
     </div>
 
 
-    <!-- MODAL 4: TAMBAH JADWAL ALARM MULTI-TIME -->
+    <!-- MODAL 4: MODERN CUSTOM INTERACTIVE TIME PICKER -->
     <div id="addAlarmModal" class="fixed inset-0 z-40 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 hidden">
-        <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-sm w-full p-5 shadow-2xl border border-amber-200 dark:border-slate-800 space-y-4">
+        <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-sm w-full p-6 shadow-2xl border border-amber-200 dark:border-slate-800 space-y-4">
             <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-2.5">
                 <h3 class="font-bold text-slate-900 dark:text-white text-sm flex items-center gap-2">
-                    <i class="fa-solid fa-clock text-amber-500"></i> Tambah Jadwal Alarm Baru
+                    <i class="fa-solid fa-clock text-amber-500"></i> Set Jam Alarm Murojaah
                 </h3>
                 <button onclick="closeAddAlarmModal()" class="text-slate-400 hover:text-slate-600 text-base">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
 
-            <form onsubmit="saveNewAlarmSchedule(event)" class="space-y-3">
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Jam Alarm:</label>
-                    <input type="time" id="newAlarmTimeInput" value="05:00" required 
-                           class="w-full px-3.5 py-2 bg-cream-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl font-mono text-lg font-bold text-emerald-950 dark:text-emerald-300 focus:outline-none">
+            <!-- Custom Interactive Digital Clock Selector -->
+            <div class="bg-gradient-to-b from-cream-50 to-white dark:from-slate-800 dark:to-slate-950 p-4 rounded-2xl border border-amber-200/80 dark:border-slate-700 flex flex-col items-center justify-center space-y-3">
+                <div class="flex items-center justify-center gap-2">
+                    <!-- Hours Wheel / Adjuster -->
+                    <div class="flex flex-col items-center">
+                        <button onclick="adjustPickerHour(1)" class="w-10 h-8 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-bold hover:bg-emerald-100 text-xs transition"><i class="fa-solid fa-chevron-up"></i></button>
+                        <span id="pickerHourDisplay" class="text-4xl font-extrabold font-mono text-emerald-950 dark:text-emerald-300 py-1">18</span>
+                        <button onclick="adjustPickerHour(-1)" class="w-10 h-8 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-bold hover:bg-emerald-100 text-xs transition"><i class="fa-solid fa-chevron-down"></i></button>
+                    </div>
+
+                    <span class="text-3xl font-bold text-amber-500 animate-pulse pb-1">:</span>
+
+                    <!-- Minutes Wheel / Adjuster -->
+                    <div class="flex flex-col items-center">
+                        <button onclick="adjustPickerMin(5)" class="w-10 h-8 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-bold hover:bg-emerald-100 text-xs transition"><i class="fa-solid fa-chevron-up"></i></button>
+                        <span id="pickerMinDisplay" class="text-4xl font-extrabold font-mono text-emerald-950 dark:text-emerald-300 py-1">00</span>
+                        <button onclick="adjustPickerMin(-5)" class="w-10 h-8 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-bold hover:bg-emerald-100 text-xs transition"><i class="fa-solid fa-chevron-down"></i></button>
+                    </div>
                 </div>
 
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Label Jadwal:</label>
-                    <input type="text" id="newAlarmLabelInput" placeholder="Misal: Murojaah Subuh / Maghrib" required 
-                           class="w-full px-3 py-2 bg-cream-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs focus:outline-none">
+                <!-- Quick Presets -->
+                <div class="flex flex-wrap justify-center gap-1.5 pt-1 text-[10px] font-bold">
+                    <button onclick="setPickerTime('04','30')" class="px-2 py-1 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-emerald-500">Subuh 04:30</button>
+                    <button onclick="setPickerTime('12','00')" class="px-2 py-1 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-emerald-500">Dzuhur 12:00</button>
+                    <button onclick="setPickerTime('15','15')" class="px-2 py-1 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-emerald-500">Ashar 15:15</button>
+                    <button onclick="setPickerTime('18','00')" class="px-2 py-1 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-emerald-500">Maghrib 18:00</button>
                 </div>
+            </div>
 
-                <div class="pt-2 flex gap-2">
-                    <button type="button" onclick="closeAddAlarmModal()" class="flex-1 py-2 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-bold text-xs rounded-xl">Batal</button>
-                    <button type="submit" class="flex-1 py-2 bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs rounded-xl shadow-md">Tambah</button>
-                </div>
-            </form>
+            <div>
+                <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Label Jadwal:</label>
+                <input type="text" id="newAlarmLabelInput" placeholder="Misal: Murojaah Subuh / Maghrib" required 
+                       class="w-full px-3.5 py-2 bg-cream-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500">
+            </div>
+
+            <div class="pt-2 flex gap-2">
+                <button type="button" onclick="closeAddAlarmModal()" class="flex-1 py-2.5 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-bold text-xs rounded-xl">Batal</button>
+                <button onclick="submitNewAlarmSchedule()" class="flex-1 py-2.5 bg-gradient-to-r from-amber-500 to-gold-500 hover:from-amber-600 text-white font-bold text-xs rounded-xl shadow-md transition active:scale-95">Simpan Jadwal</button>
+            </div>
         </div>
     </div>
 
@@ -626,7 +661,7 @@
         /* ==========================================================================
            1. INDEXEDDB PERSISTENT STORAGE
            ========================================================================== */
-        const DB_NAME = 'MurojaahDB_V1';
+        const DB_NAME = 'MurojaahDB_V2';
         const DB_VERSION = 1;
         let dbInstance = null;
 
@@ -878,7 +913,7 @@
 
 
         /* ==========================================================================
-           4. PRECISE ASTRONOMICAL ISTIWA CLOCK ENGINE
+           4. PRECISE ASTRONOMICAL ISTIWA CLOCK ENGINE (Using Spencer's Eq)
            ========================================================================== */
         let userLocation = { latitude: -7.25, longitude: 112.75 };
 
@@ -902,32 +937,26 @@
             }
         }
 
-        function calculateIstiwaTime(dateObj) {
-            const start = new Date(dateObj.getFullYear(), 0, 0);
-            const diff = dateObj - start;
-            const oneDay = 1000 * 60 * 60 * 24;
-            const dayOfYear = Math.floor(diff / oneDay);
+        function calculateIstiwaTime(now) {
+            const utcHours = now.getUTCHours() + now.getUTCMinutes() / 60 + (now.getUTCSeconds() + now.getUTCMilliseconds() / 1000) / 3600;
+            let lon = userLocation.longitude;
 
-            const B = (360 / 365.2422) * (dayOfYear - 81) * (Math.PI / 180);
-            const EoT = 9.87 * Math.sin(2 * B) - 7.53 * Math.cos(B) - 1.5 * Math.sin(B);
+            const start = new Date(now.getUTCFullYear(), 0, 0);
+            const diff = now - start;
+            const dayOfYear = Math.floor(diff / (1000 * 60 * 60 * 24));
 
-            let stdMeridian = 105; 
-            if (userLocation.longitude > 112.5 && userLocation.longitude <= 127.5) stdMeridian = 120; 
-            else if (userLocation.longitude > 127.5) stdMeridian = 135; 
+            const gamma = (2 * Math.PI / 365) * (dayOfYear - 1 + (utcHours - 12) / 24);
+            const eqTimeMin = 229.18 * (0.000075 + 0.001868 * Math.cos(gamma) - 0.032077 * Math.sin(gamma) - 0.014615 * Math.cos(2 * gamma) - 0.040849 * Math.sin(2 * gamma));
 
-            const zawalHours = 12 + (stdMeridian - userLocation.longitude) / 15 - (EoT / 60);
-            const currentHours = dateObj.getHours() + dateObj.getMinutes() / 60 + dateObj.getSeconds() / 3600;
-            const diffHours = currentHours - zawalHours;
-            
-            let istiwaTotalHours = 12 + diffHours;
-            while (istiwaTotalHours < 0) istiwaTotalHours += 24;
-            while (istiwaTotalHours >= 24) istiwaTotalHours -= 24;
+            let solarTimeHours = utcHours + (lon / 15) + (eqTimeMin / 60);
+            solarTimeHours = (solarTimeHours % 24 + 24) % 24;
 
-            const h = Math.floor(istiwaTotalHours);
-            const m = Math.floor((istiwaTotalHours - h) * 60);
-            const s = Math.floor((((istiwaTotalHours - h) * 60) - m) * 60);
+            let totalSolarSeconds = Math.floor(solarTimeHours * 3600);
+            const hrs = Math.floor(totalSolarSeconds / 3600) % 24;
+            const mins = Math.floor((totalSolarSeconds % 3600) / 60);
+            const secs = totalSolarSeconds % 60;
 
-            return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+            return `${String(hrs).padStart(2, '0')}:${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
         }
 
         function updateIstiwaClock() {
@@ -1136,7 +1165,7 @@
 
             populateSurahCategoryGrid();
             populateJuzCategoryGrid();
-            populatePageCategoryGrid();
+            populatePurePagesGrid(null);
 
             setupDockMagnification();
 
@@ -1247,7 +1276,7 @@
 
 
         /* ==========================================================================
-           9. QURAN MUSHAF READER & SEARCH
+           9. QURAN MUSHAF READER & PURE 604 PAGES GRID
            ========================================================================== */
         function switchQuranCategory(cat) {
             document.querySelectorAll('.quran-cat-panel').forEach(p => p.classList.add('hidden'));
@@ -1310,14 +1339,51 @@
             `).join('');
         }
 
-        function populatePageCategoryGrid() {
+        /* Render Murni 1 sampai 604 Grid */
+        function populatePurePagesGrid(filterJuz = null) {
             const grid = document.getElementById('quickPageGrid');
-            grid.innerHTML = ALL_JUZ.map(j => `
-                <button onclick="openQuranReaderModal(${j.startPage})" class="p-2 text-center rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:border-emerald-500 dark:hover:border-emerald-500 transition shadow-xs active:scale-95">
-                    <span class="block text-[10px] font-bold text-amber-800 dark:text-amber-300">Juz ${j.juz}</span>
-                    <span class="block text-[9px] text-slate-500 dark:text-slate-400">Hal ${j.startPage}</span>
-                </button>
-            `).join('');
+            if (!grid) return;
+
+            let pages = [];
+            for (let p = 1; p <= 604; p++) {
+                const juzNum = p === 1 ? 1 : Math.min(30, Math.floor((p - 2) / 20) + 1);
+                if (filterJuz === null || juzNum === filterJuz) {
+                    pages.push({ page: p, juz: juzNum });
+                }
+            }
+
+            grid.innerHTML = pages.map(item => {
+                const isLastRead = item.page === appState.lastReadPage;
+                const activeStyle = isLastRead 
+                    ? 'border-2 border-amber-500 bg-amber-50 dark:bg-amber-950/70 text-amber-900 dark:text-amber-300 font-extrabold shadow-md ring-2 ring-amber-400/30' 
+                    : 'border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-emerald-500 dark:hover:border-emerald-500 text-slate-700 dark:text-slate-200';
+
+                return `
+                    <button onclick="openQuranReaderModal(${item.page})" class="p-2 rounded-2xl ${activeStyle} flex flex-col items-center justify-center transition active:scale-90 group relative">
+                        <span class="text-xs font-bold">${item.page}</span>
+                        <span class="text-[8px] opacity-60">Juz ${item.juz}</span>
+                        ${isLastRead ? '<span class="absolute -top-1.5 -right-1.5 w-3 h-3 bg-amber-500 rounded-full ring-2 ring-white dark:ring-slate-900"></span>' : ''}
+                    </button>
+                `;
+            }).join('');
+        }
+
+        function filterPagesByJuz(juzNum) {
+            document.querySelectorAll('.juz-filter-btn').forEach(btn => {
+                btn.className = 'juz-filter-btn px-2 py-0.5 rounded-lg bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 font-semibold border border-slate-200 dark:border-slate-700 shrink-0 hover:bg-amber-50';
+            });
+            event.target.className = 'juz-filter-btn px-2 py-0.5 rounded-lg bg-emerald-800 text-white font-bold shrink-0';
+            populatePurePagesGrid(juzNum);
+        }
+
+        function filterPagesGridByInput(val) {
+            const pageNum = parseInt(val, 10);
+            if (pageNum >= 1 && pageNum <= 604) {
+                const targetJuz = pageNum === 1 ? 1 : Math.min(30, Math.floor((pageNum - 2) / 20) + 1);
+                populatePurePagesGrid(targetJuz);
+            } else if (!val) {
+                populatePurePagesGrid(null);
+            }
         }
 
         function openQuranReaderModal(pageNum) {
@@ -1346,6 +1412,7 @@
 
             dbSetSetting('lastReadPage', pageNum);
             renderUI();
+            populatePurePagesGrid(null);
             prefetchNeighborPages(pageNum);
         }
 
@@ -1431,13 +1498,64 @@
 
 
         /* ==========================================================================
-           11. LOGS & MULTI-ALARM MANAGEMENT
+           11. CUSTOM INTERACTIVE TIME PICKER & ALARM MANAGEMENT
            ========================================================================== */
+        let pickerHour = 18;
+        let pickerMin = 0;
+
+        function openAddAlarmModal() {
+            pickerHour = 18;
+            pickerMin = 0;
+            updatePickerDisplay();
+            document.getElementById('addAlarmModal').classList.remove('hidden');
+        }
+
+        function closeAddAlarmModal() {
+            document.getElementById('addAlarmModal').classList.add('hidden');
+        }
+
+        function adjustPickerHour(delta) {
+            pickerHour = (pickerHour + delta + 24) % 24;
+            updatePickerDisplay();
+        }
+
+        function adjustPickerMin(delta) {
+            pickerMin = (pickerMin + delta + 60) % 60;
+            updatePickerDisplay();
+        }
+
+        function setPickerTime(h, m) {
+            pickerHour = parseInt(h, 10);
+            pickerMin = parseInt(m, 10);
+            updatePickerDisplay();
+        }
+
+        function updatePickerDisplay() {
+            document.getElementById('pickerHourDisplay').innerText = String(pickerHour).padStart(2, '0');
+            document.getElementById('pickerMinDisplay').innerText = String(pickerMin).padStart(2, '0');
+        }
+
+        async function submitNewAlarmSchedule() {
+            const timeVal = `${String(pickerHour).padStart(2, '0')}:${String(pickerMin).padStart(2, '0')}`;
+            const labelVal = document.getElementById('newAlarmLabelInput').value.trim();
+
+            const newAlarm = {
+                id: Date.now(),
+                time: timeVal,
+                label: labelVal || "Murojaah",
+                enabled: true
+            };
+
+            await dbAddAlarm(newAlarm);
+            appState.alarms.push(newAlarm);
+            closeAddAlarmModal();
+            renderUI();
+            renderAlarmsList();
+            showToast("Jadwal alarm baru disimpan!", "info");
+        }
+
         function openAddLogModal() { document.getElementById('addLogModal').classList.remove('hidden'); }
         function closeAddLogModal() { document.getElementById('addLogModal').classList.add('hidden'); }
-
-        function openAddAlarmModal() { document.getElementById('addAlarmModal').classList.remove('hidden'); }
-        function closeAddAlarmModal() { document.getElementById('addAlarmModal').classList.add('hidden'); }
 
         async function addQuickPagesLog(count, notesText) {
             const today = getTodayString();
@@ -1484,26 +1602,6 @@
             renderUI();
             renderWeeklyChart();
             showToast("Target harian disimpan!", "info");
-        }
-
-        async function saveNewAlarmSchedule(e) {
-            e.preventDefault();
-            const timeVal = document.getElementById('newAlarmTimeInput').value;
-            const labelVal = document.getElementById('newAlarmLabelInput').value.trim();
-
-            const newAlarm = {
-                id: Date.now(),
-                time: timeVal,
-                label: labelVal || "Murojaah",
-                enabled: true
-            };
-
-            await dbAddAlarm(newAlarm);
-            appState.alarms.push(newAlarm);
-            closeAddAlarmModal();
-            renderUI();
-            renderAlarmsList();
-            showToast("Jadwal alarm baru ditambahkan!", "info");
         }
 
         function renderAlarmsList() {
