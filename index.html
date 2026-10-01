@@ -487,7 +487,7 @@
         <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-md w-full p-5 sm:p-6 shadow-2xl border-2 border-emerald-500 flex flex-col gap-4 max-h-[92vh] overflow-y-auto">
             <div class="text-center space-y-1">
                 <div class="w-12 h-12 rounded-2xl bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 mx-auto flex items-center justify-center text-xl font-bold">
-                    <i class="fa-solid fa-bell-ring"></i>
+                    <i class="fa-solid fa-bell"></i>
                 </div>
                 <h3 class="font-extrabold text-slate-900 dark:text-white text-base">Agar Alarm Selalu Berbunyi Otomatis</h3>
                 <p class="text-xs text-slate-500 dark:text-slate-400">Klik tombol di bawah ini untuk mengaktifkan izin notifikasi & membuka halaman pengaturan baterai HP Anda:</p>
@@ -503,7 +503,7 @@
                     <i class="fa-solid fa-circle-check text-amber-300 text-sm"></i>
                 </button>
 
-                <!-- Tombol Direct Action 2: Memicu Android Intent Langsung Buka Settings HP -->
+                <!-- Tombol Direct Action 2: Memicu Kodular AppInventor Bridge ke Settings HP -->
                 <button onclick="openAndroidSystemSettings()" class="w-full py-3 px-4 bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs rounded-2xl shadow-md transition active:scale-95 flex items-center justify-between">
                     <div class="flex items-center gap-2">
                         <span class="w-6 h-6 rounded-full bg-amber-600 text-white flex items-center justify-center font-bold text-xs">2</span>
@@ -939,7 +939,7 @@
 
 
         /* ==========================================================================
-           3. DARK MODE & AUTOMATIC ANDROID SYSTEM SETTINGS INTENT
+           3. DARK MODE & KODULAR NATIVE SETTINGS BRIDGE
            ========================================================================== */
         let isDarkMode = false;
 
@@ -993,15 +993,21 @@
             }
         }
 
-        /* FUNGSI OTOMATIS MEMBUKA PENGATURAN HP ANDROID VIA INTENT */
+        /* FUNGSI UTAMA MEMBUKA PENGATURAN HP VIA KODULAR APP INVENTOR BRIDGE */
         function openAndroidSystemSettings() {
-            const packageName = "com.murojaah.hannan";
-            try {
-                // Memicu Android Intent untuk langsung membuka halaman App Info / Baterai aplikasi ini
-                window.location.href = `intent:#Intent;action=android.settings.APPLICATION_DETAILS_SETTINGS;data=package:${packageName};end`;
+            if (window.AppInventor) {
+                // Mengirim pesan 'OPEN_SETTINGS' ke blok Kodular
+                window.AppInventor.setWebViewString("OPEN_SETTINGS");
                 showToast("Membuka Pengaturan HP...", "info");
-            } catch(e) {
-                showToast("Silakan buka Pengaturan HP -> Aplikasi -> Murojaah", "info");
+            } else {
+                // Fallback jika dibuka dari browser biasa
+                const packageName = "com.murojaah.hannan";
+                try {
+                    window.location.href = `intent:#Intent;action=android.settings.APPLICATION_DETAILS_SETTINGS;data=package:${packageName};end`;
+                    showToast("Membuka Pengaturan HP...", "info");
+                } catch(e) {
+                    showToast("Silakan buka Pengaturan HP -> Aplikasi -> Murojaah", "info");
+                }
             }
         }
 
