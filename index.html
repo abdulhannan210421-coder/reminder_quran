@@ -1,0 +1,1712 @@
+<!DOCTYPE html>
+<html lang="id" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Nūr Tilawah - Pengingat & Reader Al-Qur'an 30 Juz</title>
+    
+    <!-- Google Fonts: Plus Jakarta Sans & Amiri -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        cream: {
+                            50: '#FDFBF7',
+                            100: '#FAF7F2',
+                            200: '#F3ECE0',
+                            300: '#E8DCC8',
+                        },
+                        emerald: {
+                            850: '#0A4A2F',
+                            900: '#0D5C3A',
+                            950: '#063320',
+                        },
+                        gold: {
+                            400: '#F59E0B',
+                            500: '#D4AF37',
+                            600: '#B89228',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        arabic: ['"Amiri"', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #CBD5E1;
+            border-radius: 9999px;
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background: #334155;
+        }
+
+        /* Glassmorphism Styles */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+        }
+        .dark .glass-card {
+            background: rgba(15, 23, 42, 0.88);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(30, 41, 59, 0.8);
+        }
+
+        .glass-card-gold {
+            background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(253,247,235,0.92) 100%);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(212, 175, 55, 0.35);
+        }
+        .dark .glass-card-gold {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(6, 36, 23, 0.9) 100%);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(212, 175, 55, 0.25);
+        }
+
+        .bg-islamic-pattern {
+            background-color: #FAF7F2;
+            background-image: radial-gradient(#0D5C3A 0.5px, transparent 0.5px), radial-gradient(#D4AF37 0.5px, #FAF7F2 0.5px);
+            background-size: 24px 24px;
+            background-position: 0 0, 12px 12px;
+        }
+        .dark .bg-islamic-pattern {
+            background-color: #0B1320;
+            background-image: radial-gradient(#10B981 0.5px, transparent 0.5px), radial-gradient(#D4AF37 0.5px, #0B1320 0.5px);
+            background-size: 24px 24px;
+        }
+
+        /* Ring Progress */
+        .progress-ring-circle {
+            transition: stroke-dashoffset 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+        }
+
+        /* macOS Dock Icon Magnification */
+        .dock-item {
+            transition: transform 0.15s cubic-bezier(0.2, 0, 0.1, 1), margin 0.15s ease-out;
+            will-change: transform;
+        }
+
+        /* iOS Style Toast Banner */
+        .ios-toast {
+            animation: ios-banner-in 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        @keyframes ios-banner-in {
+            0% { opacity: 0; transform: translateY(-30px) scale(0.92); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(13, 92, 58, 0.3), 0 0 40px rgba(212, 175, 55, 0.2); }
+            50% { box-shadow: 0 0 35px rgba(13, 92, 58, 0.5), 0 0 60px rgba(212, 175, 55, 0.4); }
+        }
+
+        .animate-pulse-glow {
+            animation: pulse-glow 3s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-islamic-pattern text-slate-800 dark:text-slate-100 font-sans min-h-full flex flex-col pb-32 transition-colors duration-300 antialiased selection:bg-emerald-900 selection:text-white">
+
+    <!-- Compact Top Navigation Header -->
+    <header class="sticky top-0 z-30 glass-card border-b border-amber-100/60 dark:border-slate-800 shadow-sm transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-2 sm:py-2.5 space-y-1.5">
+            
+            <!-- Row 1: Brand Logo & Dark Mode Toggle + GPS Istiwa Button -->
+            <div class="flex items-center justify-between">
+                
+                <!-- CLICKABLE LOGO FOR DARK MODE TOGGLE -->
+                <button onclick="toggleDarkMode()" class="flex items-center gap-2 group text-left focus:outline-none" title="Klik Logo untuk Mode Gelap / Terang">
+                    <div id="brandLogoBox" class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-emerald-900 to-emerald-600 flex items-center justify-center text-amber-300 shadow-sm ring-1 ring-amber-400/40 group-active:scale-90 transition-transform">
+                        <i id="brandIcon" class="fa-solid fa-book-quran text-base sm:text-xl"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-1">
+                            <h1 class="font-extrabold text-sm sm:text-lg tracking-tight text-emerald-950 dark:text-emerald-300">Nūr Tilawah</h1>
+                            <span class="bg-amber-100 dark:bg-amber-900/60 text-amber-800 dark:text-amber-300 text-[8px] sm:text-[9px] font-bold px-1.5 py-0.2 rounded-full border border-amber-300/60">30 Juz</span>
+                        </div>
+                        <p class="text-[9px] text-slate-500 dark:text-slate-400 font-medium leading-none">Klik icon: <span id="themeLabel" class="font-bold text-amber-600 dark:text-amber-400">Mode Terang ☀️</span></p>
+                    </div>
+                </button>
+
+                <!-- GPS Trigger Button -->
+                <button onclick="requestGPSLocation()" class="px-2 py-1 rounded-lg bg-cream-100 dark:bg-slate-800 border border-amber-200/80 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-[10px] sm:text-xs font-bold flex items-center gap-1 hover:bg-amber-50 dark:hover:bg-slate-700 transition shadow-sm" title="Deteksi Lokasi GPS untuk Jam Istiwa">
+                    <i class="fa-solid fa-location-crosshairs text-amber-600 dark:text-amber-400"></i>
+                    <span>GPS Istiwa</span>
+                </button>
+            </div>
+
+            <!-- Row 2: Hijri Date & Dual Clocks -->
+            <div class="flex items-center justify-between gap-1 pt-1 border-t border-amber-100/50 dark:border-slate-800/80 text-[10px] sm:text-xs">
+                <div class="font-arabic text-xs sm:text-sm text-emerald-900 dark:text-amber-300 font-bold leading-none truncate" id="arabicHijriText">
+                    ١٤٤٨ هـ - جارٍ التحميل...
+                </div>
+
+                <div class="flex items-center gap-2 text-[9px] sm:text-[11px] shrink-0">
+                    <span class="text-slate-600 dark:text-slate-400 font-medium">Lokal: <strong id="liveClockLocal" class="font-mono font-bold text-emerald-900 dark:text-emerald-400">00:00:00</strong></span>
+                    <span class="text-amber-800 dark:text-amber-400 font-medium">Istiwa: <strong id="liveClockIstiwa" class="font-mono font-bold text-amber-700 dark:text-amber-300">12:00:00</strong></span>
+                </div>
+            </div>
+
+        </div>
+    </header>
+
+
+    <!-- MAIN TABBED CONTENT VIEWS -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 py-3.5 sm:py-6">
+
+        <!-- TAB 1: BERANDA / HOME DASHBOARD -->
+        <div id="tab-home" class="tab-content space-y-4 sm:space-y-6">
+            
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6">
+                <!-- Hero Progress Card (7 cols) -->
+                <div class="lg:col-span-7 glass-card-gold rounded-3xl p-4 sm:p-7 shadow-xl shadow-amber-900/5 relative overflow-hidden flex flex-col justify-between">
+                    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 relative z-10">
+                        <!-- Circular Progress Ring -->
+                        <div class="relative w-32 h-32 sm:w-40 sm:h-40 flex-shrink-0 flex items-center justify-center">
+                            <svg class="w-full h-full" viewBox="0 0 100 100">
+                                <circle class="text-amber-100 dark:text-slate-800" stroke-width="8" stroke="currentColor" fill="transparent" r="40" cx="50" cy="50"/>
+                                <circle id="progressCircle" class="progress-ring-circle text-emerald-600 dark:text-emerald-400" stroke-width="8" 
+                                        stroke-dasharray="251.2" stroke-dashoffset="251.2" 
+                                        stroke-linecap="round" stroke="currentColor" fill="transparent" r="40" cx="50" cy="50"/>
+                            </svg>
+                            <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
+                                <span id="progressPercent" class="text-2xl sm:text-3xl font-extrabold text-emerald-950 dark:text-emerald-300">0%</span>
+                                <span class="text-[9px] sm:text-[10px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Tercapai</span>
+                            </div>
+                        </div>
+
+                        <!-- Progress Text Details -->
+                        <div class="flex-1 text-center sm:text-left space-y-2">
+                            <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-100/80 dark:bg-emerald-950/80 border border-emerald-300 dark:border-emerald-800 text-emerald-900 dark:text-emerald-200 text-[11px] font-semibold">
+                                <i class="fa-solid fa-bullseye text-amber-600 dark:text-amber-400"></i>
+                                <span>Target Hari Ini: <strong id="displayTargetPages">2</strong> Halaman</span>
+                            </div>
+
+                            <h2 class="text-lg sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">Assalamu'alaikum!</h2>
+                            <p id="progressStatusSub" class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                                Yuk luangkan waktu untuk tilawah Al-Qur'an hari ini.
+                            </p>
+
+                            <div class="pt-1 flex flex-wrap items-center justify-center sm:justify-start gap-2">
+                                <button onclick="switchTab('quran')" class="px-3.5 py-2 bg-emerald-800 hover:bg-emerald-900 dark:bg-emerald-700 dark:hover:bg-emerald-600 text-white font-bold text-xs rounded-xl shadow-md transition active:scale-95 flex items-center gap-1.5">
+                                    <i class="fa-solid fa-book-open text-amber-300"></i> Baca Qur'an Sekarang
+                                </button>
+                                <button onclick="openAddLogModal()" class="px-3 py-2 bg-white dark:bg-slate-800 hover:bg-amber-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold text-xs rounded-xl border border-amber-300 dark:border-slate-700 shadow-sm transition active:scale-95 flex items-center gap-1.5">
+                                    <i class="fa-solid fa-pen-to-square text-amber-600 dark:text-amber-400"></i> Input Manual
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Progress Bar Status -->
+                    <div class="mt-4 pt-2.5 border-t border-amber-200/60 dark:border-slate-800 flex items-center justify-between text-xs text-slate-600 dark:text-slate-400 relative z-10">
+                        <span class="font-medium">Progres: <span id="pagesReadToday" class="font-bold text-emerald-900 dark:text-emerald-300">0</span> dari <span id="targetPagesTotal" class="font-bold text-emerald-900 dark:text-emerald-300">2</span> hal</span>
+                        <span id="statusBadgeText" class="px-2 py-0.5 rounded-md font-bold bg-amber-100 text-amber-800 border border-amber-300 text-[10px]">
+                            Belum Selesai
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Alarm & Streak Overview (5 cols) -->
+                <div class="lg:col-span-5 glass-card rounded-3xl p-4 sm:p-6 shadow-xl shadow-emerald-900/5 flex flex-col justify-between border border-emerald-900/10">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="flex items-center gap-2">
+                                <div class="w-8 h-8 rounded-xl bg-amber-100 dark:bg-amber-950/60 text-amber-700 dark:text-amber-400 flex items-center justify-center">
+                                    <i class="fa-solid fa-bell text-base animate-pulse"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-slate-900 dark:text-white text-sm">Pengingat Persisten</h3>
+                                    <p class="text-[10px] text-slate-500 dark:text-slate-400">Alarm pintar harian</p>
+                                </div>
+                            </div>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" id="alarmToggle" class="sr-only peer" onchange="toggleAlarmSetting(this.checked)" checked>
+                                <div class="w-10 h-5 bg-slate-200 dark:bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-emerald-600"></div>
+                            </label>
+                        </div>
+
+                        <div class="bg-cream-100/90 dark:bg-slate-800/80 rounded-2xl p-3 border border-amber-200/70 dark:border-slate-700 space-y-2">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs text-slate-600 dark:text-slate-300 font-medium">Jam Alarm Harian:</span>
+                                <span id="displayAlarmTime" class="text-sm font-extrabold text-emerald-900 dark:text-emerald-300 font-mono bg-white dark:bg-slate-900 px-2.5 py-0.5 rounded-lg border border-amber-200 dark:border-slate-700">18:00</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs text-slate-600 dark:text-slate-300 font-medium">Streak Beruntun:</span>
+                                <span class="text-[11px] font-bold text-amber-800 dark:text-amber-300 bg-amber-100 dark:bg-amber-950/80 px-2 py-0.5 rounded-full"><span id="streakCount">0</span> Hari ⚡</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-3 pt-2.5 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between gap-2">
+                        <button onclick="testAlarmSound()" class="text-xs font-semibold text-emerald-800 dark:text-emerald-400 hover:text-emerald-950 flex items-center gap-1 transition">
+                            <i class="fa-solid fa-volume-high text-amber-500 text-[11px]"></i> Tes Suara
+                        </button>
+                        <button onclick="triggerPersistentAlarm(true)" class="text-[10px] font-semibold text-amber-800 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/40 hover:bg-amber-100 px-2.5 py-1 rounded-lg border border-amber-200 dark:border-amber-900/50 transition">
+                            Simulasi Alarm Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hikmah Card -->
+            <div class="glass-card-gold rounded-3xl p-4 sm:p-5 shadow-xl shadow-amber-900/5 border border-amber-300/40">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="bg-amber-100 dark:bg-amber-950/60 text-amber-900 dark:text-amber-300 text-[11px] font-bold px-2.5 py-0.5 rounded-full border border-amber-300/60 flex items-center gap-1">
+                        <i class="fa-solid fa-quote-left text-amber-600 dark:text-amber-400"></i> Mutiara Hikmah
+                    </span>
+                    <button onclick="refreshDailyVerse()" class="text-amber-700 dark:text-amber-400 hover:text-amber-950 text-xs font-medium flex items-center gap-1 transition">
+                        <i class="fa-solid fa-arrows-rotate"></i> Acak Ayat
+                    </button>
+                </div>
+                <div class="text-right py-1">
+                    <p id="arabicVerseText" class="font-arabic text-lg sm:text-2xl text-emerald-950 dark:text-amber-200 leading-relaxed font-bold">
+                        إِنَّ هَٰذَا الْقُرْآنَ يَهْدِي لِلَّتِي هِيَ أَقْوَمُ
+                    </p>
+                </div>
+                <p id="translationVerseText" class="text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
+                    "Sungguh, Al-Qur'an ini memberikan petunjuk kepada (jalan) yang lebih lurus..." (QS. Al-Isra': 9)
+                </p>
+            </div>
+
+        </div>
+
+        <!-- TAB 2: QURAN READER & CATEGORIES SEARCH -->
+        <div id="tab-quran" class="tab-content hidden space-y-3">
+            
+            <div class="glass-card rounded-3xl p-3.5 sm:p-5 shadow-md border border-amber-200/80 dark:border-slate-800">
+                <div class="flex items-center justify-between mb-2.5">
+                    <h3 class="font-bold text-slate-900 dark:text-white text-sm sm:text-base flex items-center gap-1.5">
+                        <i class="fa-solid fa-compass text-emerald-800 dark:text-emerald-400"></i> Navigasi & Pencarian Qur'an
+                    </h3>
+                    <span class="text-[10px] sm:text-xs text-amber-800 dark:text-amber-300 font-bold bg-amber-100 dark:bg-amber-950/80 px-2 py-0.5 rounded-full">30 Juz / 604 Hal</span>
+                </div>
+
+                <!-- Category Selector Tabs (Neat & Balanced) -->
+                <div class="grid grid-cols-3 gap-1.5 bg-cream-100 dark:bg-slate-800 p-1 rounded-2xl border border-amber-200/60 dark:border-slate-700 mb-3 text-[11px] font-bold">
+                    <button onclick="switchQuranCategory('surah')" id="catBtn-surah" class="cat-tab-btn py-1.5 sm:py-2 px-1 text-center rounded-xl transition bg-emerald-800 text-white shadow-xs truncate">
+                        📖 Surah (114)
+                    </button>
+                    <button onclick="switchQuranCategory('juz')" id="catBtn-juz" class="cat-tab-btn py-1.5 sm:py-2 px-1 text-center rounded-xl transition bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 hover:bg-cream-50 truncate">
+                        📚 Juz (1-30)
+                    </button>
+                    <button onclick="switchQuranCategory('page')" id="catBtn-page" class="cat-tab-btn py-1.5 sm:py-2 px-1 text-center rounded-xl transition bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 hover:bg-cream-50 truncate">
+                        📄 Halaman
+                    </button>
+                </div>
+
+                <!-- Category Panel 1: PER SURAH -->
+                <div id="quranCat-surah" class="quran-cat-panel space-y-2.5">
+                    <div class="relative">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-slate-400 text-xs"></i>
+                        <input type="text" id="surahSearchInput" oninput="filterSurahList(this.value)" placeholder="Cari nama surah atau nomor surah..." 
+                               class="w-full pl-8 pr-3 py-1.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                    </div>
+                    <div id="surahListGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 max-h-[52vh] overflow-y-auto pr-1 pb-6">
+                        <!-- JS Populate Surahs -->
+                    </div>
+                </div>
+
+                <!-- Category Panel 2: PER JUZ -->
+                <div id="quranCat-juz" class="quran-cat-panel hidden">
+                    <div id="juzListGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 max-h-[52vh] overflow-y-auto pr-1 pb-6">
+                        <!-- JS Populate 30 Juz -->
+                    </div>
+                </div>
+
+                <!-- Category Panel 3: PER HALAMAN (Clean 3-Column Fast-Jump Grid) -->
+                <div id="quranCat-page" class="quran-cat-panel hidden space-y-3 pb-6">
+                    <div class="bg-cream-50 dark:bg-slate-800 p-3 rounded-2xl border border-amber-200/80 dark:border-slate-700 flex items-center justify-between gap-2">
+                        <label class="text-xs font-bold text-slate-700 dark:text-slate-300">Langsung Ke Halaman:</label>
+                        <div class="flex items-center gap-1.5">
+                            <input type="number" id="directPageInput" min="1" max="604" value="1" 
+                                   class="w-16 px-2 py-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-extrabold text-emerald-950 dark:text-emerald-300 text-center focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                            <button onclick="openQuranReaderModal(parseInt(document.getElementById('directPageInput').value))" class="px-3 py-1 bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-xs rounded-xl shadow-xs transition active:scale-95">
+                                Buka
+                            </button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <p class="text-xs font-bold text-slate-500 dark:text-slate-400 mb-2">Pilih Cepat Halaman Awal Juz:</p>
+                        <!-- Structured 3-Column Grid on Mobile -->
+                        <div id="quickPageGrid" class="grid grid-cols-3 sm:grid-cols-5 md:grid-cols-6 gap-2 max-h-[48vh] overflow-y-auto pr-1">
+                            <!-- JS Populate Quick Page Cards -->
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- TAB 3: FOKUS TIMER -->
+        <div id="tab-timer" class="tab-content hidden space-y-4">
+            <div class="glass-card rounded-3xl p-5 shadow-xl space-y-4 max-w-xl mx-auto text-center">
+                <div class="flex items-center justify-between mb-2">
+                    <h3 class="font-bold text-slate-900 dark:text-white text-sm sm:text-base flex items-center gap-2">
+                        <i class="fa-solid fa-stopwatch text-emerald-800 dark:text-emerald-400"></i> Sesi Membaca Fokus
+                    </h3>
+                    <span id="focusTimerBadge" class="bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 text-xs font-bold px-2 py-0.5 rounded-lg border border-emerald-200 dark:border-emerald-800">Siap</span>
+                </div>
+
+                <div class="py-5 bg-gradient-to-b from-cream-50 to-white dark:from-slate-800 dark:to-slate-900 rounded-2xl border border-amber-100 dark:border-slate-700">
+                    <div id="focusTimerDisplay" class="text-4xl sm:text-5xl font-extrabold text-slate-800 dark:text-white font-mono tracking-tight">15:00</div>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Rentang Khusyu' Membaca Al-Qur'an</p>
+
+                    <div class="flex justify-center gap-2 mt-3">
+                        <button onclick="setFocusDuration(10)" class="focus-preset-btn px-2.5 py-1 text-xs rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 font-medium hover:border-emerald-500 transition">10 Mnt</button>
+                        <button onclick="setFocusDuration(15)" class="focus-preset-btn px-2.5 py-1 text-xs rounded-lg border border-emerald-600 bg-emerald-50 dark:bg-emerald-950 text-emerald-900 dark:text-emerald-300 font-bold transition">15 Mnt</button>
+                        <button onclick="setFocusDuration(20)" class="focus-preset-btn px-2.5 py-1 text-xs rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 font-medium hover:border-emerald-500 transition">20 Mnt</button>
+                    </div>
+                </div>
+
+                <div class="space-y-2.5">
+                    <div class="flex items-center justify-between px-1">
+                        <span class="text-xs font-semibold text-slate-600 dark:text-slate-300 flex items-center gap-1.5">
+                            <i class="fa-solid fa-music text-amber-500"></i> Audio Relaksasi Calm:
+                        </span>
+                        <button id="ambientSoundToggleBtn" onclick="toggleAmbientSound()" class="text-xs font-bold text-slate-600 dark:text-slate-300 hover:text-emerald-800 bg-slate-100 dark:bg-slate-800 hover:bg-emerald-50 px-2.5 py-1 rounded-xl border border-slate-200 dark:border-slate-700 transition">
+                            <i class="fa-solid fa-play text-[10px] mr-1"></i> Putar Suara
+                        </button>
+                    </div>
+
+                    <div class="flex gap-2">
+                        <button id="startFocusBtn" onclick="toggleFocusTimer()" class="flex-1 py-2.5 bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-xs sm:text-sm rounded-xl shadow-md transition active:scale-95 flex items-center justify-center gap-1.5">
+                            <i class="fa-solid fa-play"></i> Mulai Timer Fokus
+                        </button>
+                        <button onclick="resetFocusTimer()" class="px-3.5 py-2.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-600 dark:text-slate-300 font-bold text-xs rounded-xl transition">
+                            <i class="fa-solid fa-rotate-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 4: STATISTIK & LOGS -->
+        <div id="tab-stats" class="tab-content hidden space-y-4">
+            <div class="glass-card rounded-3xl p-4 sm:p-5 shadow-xl space-y-4">
+                <div class="flex items-center justify-between">
+                    <h3 class="font-bold text-slate-900 dark:text-white text-sm sm:text-base flex items-center gap-1.5">
+                        <i class="fa-solid fa-chart-simple text-amber-600"></i> Riwayat Tilawah 7 Hari Terakhir
+                    </h3>
+                    <span class="text-xs text-slate-500 dark:text-slate-400">Statistik Halaman</span>
+                </div>
+
+                <div class="relative h-40 w-full bg-cream-50/80 dark:bg-slate-800/80 rounded-2xl p-2.5 border border-slate-100 dark:border-slate-700">
+                    <canvas id="weeklyChartCanvas" class="w-full h-full"></canvas>
+                </div>
+
+                <div>
+                    <h4 class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">Log Catatan Hari Ini</h4>
+                    <div id="recentLogsList" class="space-y-2 max-h-48 overflow-y-auto pr-1 pb-6">
+                        <!-- JS Insert -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 5: PENGATURAN -->
+        <div id="tab-settings" class="tab-content hidden space-y-4">
+            <div class="glass-card rounded-3xl p-5 shadow-xl max-w-md mx-auto space-y-4">
+                <h3 class="font-bold text-slate-900 dark:text-white text-sm sm:text-base flex items-center gap-2 border-b border-slate-100 dark:border-slate-800 pb-2.5">
+                    <i class="fa-solid fa-gear text-emerald-800 dark:text-emerald-400"></i> Pengaturan Target & Alarm
+                </h3>
+
+                <form onsubmit="saveSettings(event)" class="space-y-3.5">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Target Halaman per Hari:</label>
+                        <input type="number" id="settingTargetPages" min="1" max="604" value="2" required 
+                               class="w-full px-3.5 py-2 bg-cream-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl font-bold text-emerald-950 dark:text-emerald-300 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Jam Alarm Pengingat Harian:</label>
+                        <input type="time" id="settingAlarmTime" value="18:00" required 
+                               class="w-full px-3.5 py-2 bg-cream-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl font-mono text-base font-bold text-emerald-950 dark:text-emerald-300 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                    </div>
+
+                    <div class="pt-2">
+                        <button type="submit" class="w-full py-2.5 bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-xs rounded-xl shadow-md transition active:scale-95">
+                            Simpan Perubahan
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </main>
+
+
+    <!-- macOS / iOS BOTTOM DOCK NAVIGATION BAR -->
+    <nav class="fixed bottom-3 left-1/2 -translate-x-1/2 z-40">
+        <div id="macDock" class="dock-container flex items-center gap-1.5 sm:gap-2 px-3 py-2 bg-white/80 dark:bg-slate-900/90 backdrop-blur-2xl border border-white/50 dark:border-slate-700 shadow-2xl rounded-3xl ring-1 ring-amber-200/50 dark:ring-slate-700">
+            
+            <button onclick="switchTab('home')" id="dockBtn-home" class="dock-item relative group p-2.5 sm:p-3 rounded-2xl bg-emerald-800 text-white shadow-md transition flex flex-col items-center">
+                <i class="fa-solid fa-house text-lg sm:text-xl"></i>
+                <span class="absolute -top-8 bg-slate-900 text-white text-[10px] font-bold px-2 py-0.5 rounded-md opacity-0 group-hover:opacity-100 transition pointer-events-none whitespace-nowrap">Beranda</span>
+            </button>
+
+            <button onclick="switchTab('quran')" id="dockBtn-quran" class="dock-item relative group p-2.5 sm:p-3 rounded-2xl bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:text-emerald-800 shadow-sm transition flex flex-col items-center">
+                <i class="fa-solid fa-book-quran text-lg sm:text-xl"></i>
+                <span class="absolute -top-8 bg-slate-900 text-white text-[10px] font-bold px-2 py-0.5 rounded-md opacity-0 group-hover:opacity-100 transition pointer-events-none whitespace-nowrap">Baca Qur'an</span>
+            </button>
+
+            <button onclick="switchTab('timer')" id="dockBtn-timer" class="dock-item relative group p-2.5 sm:p-3 rounded-2xl bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:text-emerald-800 shadow-sm transition flex flex-col items-center">
+                <i class="fa-solid fa-stopwatch text-lg sm:text-xl"></i>
+                <span class="absolute -top-8 bg-slate-900 text-white text-[10px] font-bold px-2 py-0.5 rounded-md opacity-0 group-hover:opacity-100 transition pointer-events-none whitespace-nowrap">Fokus Timer</span>
+            </button>
+
+            <button onclick="switchTab('stats')" id="dockBtn-stats" class="dock-item relative group p-2.5 sm:p-3 rounded-2xl bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:text-emerald-800 shadow-sm transition flex flex-col items-center">
+                <i class="fa-solid fa-chart-simple text-lg sm:text-xl"></i>
+                <span class="absolute -top-8 bg-slate-900 text-white text-[10px] font-bold px-2 py-0.5 rounded-md opacity-0 group-hover:opacity-100 transition pointer-events-none whitespace-nowrap">Statistik</span>
+            </button>
+
+            <button onclick="switchTab('settings')" id="dockBtn-settings" class="dock-item relative group p-2.5 sm:p-3 rounded-2xl bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:text-emerald-800 shadow-sm transition flex flex-col items-center">
+                <i class="fa-solid fa-sliders text-lg sm:text-xl"></i>
+                <span class="absolute -top-8 bg-slate-900 text-white text-[10px] font-bold px-2 py-0.5 rounded-md opacity-0 group-hover:opacity-100 transition pointer-events-none whitespace-nowrap">Pengaturan</span>
+            </button>
+
+        </div>
+    </nav>
+
+
+    <!-- MODAL 1: FULL 30-JUZ MUSHAF QURAN READER (RTL Layout) -->
+    <div id="quranReaderModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-2 sm:p-4 hidden">
+        <div class="bg-cream-50 dark:bg-slate-900 rounded-3xl max-w-2xl w-full p-3 sm:p-5 shadow-2xl border border-amber-200 dark:border-slate-800 flex flex-col gap-3 max-h-[96vh] overflow-hidden">
+            
+            <div class="flex items-center justify-between pb-2 border-b border-amber-200/60 dark:border-slate-800">
+                <div>
+                    <h3 id="mushafHeaderTitle" class="font-bold text-slate-900 dark:text-white text-sm sm:text-base">Mushaf Al-Qur'an Madani</h3>
+                    <p id="mushafHeaderSub" class="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400">Halaman 1 dari 604 (Juz 1)</p>
+                </div>
+                <button onclick="closeQuranReaderModal()" class="w-8 h-8 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-300 hover:text-slate-800 flex items-center justify-center transition">
+                    <i class="fa-solid fa-xmark text-sm"></i>
+                </button>
+            </div>
+
+            <!-- Image Viewport -->
+            <div class="flex-1 bg-white dark:bg-slate-950 rounded-2xl border border-amber-200/80 dark:border-slate-800 p-2 flex items-center justify-center overflow-hidden min-h-[300px] relative shadow-inner">
+                <img id="mushafImage" src="" alt="Halaman Mushaf Al-Qur'an" class="max-h-[60vh] sm:max-h-[68vh] w-auto object-contain transition-opacity duration-300">
+            </div>
+
+            <!-- RTL NAVIGATION BUTTONS (Next on LEFT, Prev on RIGHT) -->
+            <div class="grid grid-cols-12 gap-2 pt-1">
+                <button onclick="nextQuranPage()" class="col-span-4 py-2.5 sm:py-3 bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-xs rounded-xl shadow-md transition active:scale-95 flex items-center justify-center gap-1.5">
+                    <span>Lanjut (Hal <span id="nextPageNumLabel">2</span>)</span>
+                    <i class="fa-solid fa-chevron-left text-[10px]"></i>
+                </button>
+
+                <button onclick="markCurrentPageRead()" class="col-span-4 py-2.5 sm:py-3 bg-gradient-to-r from-amber-500 to-gold-500 hover:from-amber-600 text-white font-bold text-xs rounded-xl shadow-md transition active:scale-95 flex items-center justify-center gap-1">
+                    <i class="fa-solid fa-check text-xs"></i>
+                    <span class="hidden sm:inline">Selesai Baca Hal Ini</span>
+                    <span class="sm:hidden">+1 Hal</span>
+                </button>
+
+                <button onclick="prevQuranPage()" class="col-span-4 py-2.5 sm:py-3 bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-xs rounded-xl shadow-md transition active:scale-95 flex items-center justify-center gap-1.5">
+                    <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                    <span>Sebelum (Hal <span id="prevPageNumLabel">1</span>)</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- MODAL 2: FULL PERSISTENT ALARM OVERLAY (Anti-Snooze) -->
+    <div id="persistentAlarmOverlay" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-xl flex items-center justify-center p-4 hidden">
+        <div class="relative max-w-md w-full bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 shadow-2xl border-2 border-emerald-500 text-center space-y-5 animate-pulse-glow z-10">
+            <div class="w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-3xl bg-gradient-to-tr from-emerald-800 to-emerald-600 text-amber-300 flex items-center justify-center text-3xl sm:text-4xl shadow-lg shadow-emerald-900/30 animate-bounce">
+                <i class="fa-solid fa-bell font-bold"></i>
+            </div>
+
+            <div class="space-y-1.5">
+                <span class="bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 text-[10px] sm:text-xs font-bold px-3 py-1 rounded-full border border-amber-300/60 uppercase tracking-widest">
+                    Waktunya Tilawah!
+                </span>
+                <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white">Pengingat Al-Qur'an Harian</h2>
+                <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                    Target membaca hari ini belum terpenuhi. Notifikasi selalu muncul sampai Anda membaca Al-Qur'an hari ini!
+                </p>
+            </div>
+
+            <div class="bg-cream-100 dark:bg-slate-800 p-3.5 rounded-2xl border border-amber-200 dark:border-slate-700 text-left space-y-1 text-xs">
+                <div class="flex justify-between font-bold text-slate-800 dark:text-slate-200">
+                    <span>Target Harian:</span>
+                    <span id="alarmModalTargetText" class="text-emerald-800 dark:text-emerald-400">2 Halaman</span>
+                </div>
+                <div class="flex justify-between text-slate-600 dark:text-slate-400">
+                    <span>Sudah Dibaca:</span>
+                    <span id="alarmModalReadText" class="font-bold">0 Halaman</span>
+                </div>
+            </div>
+
+            <div class="space-y-2 pt-1">
+                <button onclick="handleAlarmAction('read_now')" class="w-full py-3 bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-xs sm:text-sm rounded-2xl shadow-lg transition active:scale-95 flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-book-open text-amber-300"></i> Buka Al-Qur'an & Baca Sekarang
+                </button>
+                <button onclick="handleAlarmAction('confirm_done')" class="w-full py-2.5 bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs rounded-2xl transition active:scale-95">
+                    ✓ Saya Sudah Membaca Hari Ini
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- MODAL 3: ADD DETAIL LOG -->
+    <div id="addLogModal" class="fixed inset-0 z-40 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+        <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-md w-full p-6 shadow-2xl border border-amber-200 dark:border-slate-800 space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
+                <h3 class="font-bold text-slate-900 dark:text-white text-base flex items-center gap-2">
+                    <i class="fa-solid fa-book-open text-emerald-800 dark:text-emerald-400"></i> Tambah Catatan Tilawah
+                </h3>
+                <button onclick="closeAddLogModal()" class="text-slate-400 hover:text-slate-600 text-lg">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <form onsubmit="saveReadingLog(event)" class="space-y-3">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Jumlah Halaman Dibaca:</label>
+                    <input type="number" id="logPagesInput" min="1" max="604" value="2" required 
+                           class="w-full px-4 py-2 bg-cream-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl font-bold text-emerald-950 dark:text-emerald-300 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Dari Hal (Opsional):</label>
+                        <input type="number" id="logStartPageInput" min="1" max="604" placeholder="Misal: 1" 
+                               class="w-full px-3 py-2 bg-cream-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl text-xs focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Sampai Hal (Opsional):</label>
+                        <input type="number" id="logEndPageInput" min="1" max="604" placeholder="Misal: 3" 
+                               class="w-full px-3 py-2 bg-cream-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl text-xs focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Catatan / Surah (Opsional):</label>
+                    <input type="text" id="logNotesInput" placeholder="Contoh: Surah Al-Baqarah" 
+                           class="w-full px-3 py-2 bg-cream-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl text-xs focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                </div>
+
+                <div class="pt-2 flex gap-2">
+                    <button type="button" onclick="closeAddLogModal()" class="flex-1 py-2.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-300 font-bold text-xs rounded-2xl transition">Batal</button>
+                    <button type="submit" class="flex-1 py-2.5 bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-xs rounded-2xl shadow-md transition">Simpan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- CELEBRATION CONFETTI CANVAS -->
+    <canvas id="confettiCanvas" class="fixed inset-0 pointer-events-none z-50 hidden"></canvas>
+
+    <!-- iOS STYLE BANNER TOAST CONTAINER -->
+    <div id="toastContainer" class="fixed top-4 left-1/2 -translate-x-1/2 z-50 flex flex-col gap-2 pointer-events-none max-w-sm w-full px-4"></div>
+
+
+    <!-- JAVASCRIPT ENGINE -->
+    <script>
+        /* ==========================================================================
+           1. INDEXEDDB PERSISTENT STORAGE MODULE (With Quran Image Caching)
+           ========================================================================== */
+        const DB_NAME = 'NurTilawahDB_V6';
+        const DB_VERSION = 1;
+        let dbInstance = null;
+
+        function initDB() {
+            return new Promise((resolve, reject) => {
+                if (dbInstance) return resolve(dbInstance);
+
+                const request = indexedDB.open(DB_NAME, DB_VERSION);
+
+                request.onupgradeneeded = (e) => {
+                    const db = e.target.result;
+                    if (!db.objectStoreNames.contains('settings')) {
+                        db.createObjectStore('settings');
+                    }
+                    if (!db.objectStoreNames.contains('logs')) {
+                        db.createObjectStore('logs', { keyPath: 'id' });
+                    }
+                    if (!db.objectStoreNames.contains('quranImages')) {
+                        db.createObjectStore('quranImages', { keyPath: 'page' });
+                    }
+                };
+
+                request.onsuccess = (e) => {
+                    dbInstance = e.target.result;
+                    resolve(dbInstance);
+                };
+
+                request.onerror = (e) => reject(e.target.error);
+            });
+        }
+
+        async function dbGetSetting(key, defaultValue) {
+            const db = await initDB();
+            return new Promise((resolve) => {
+                const tx = db.transaction('settings', 'readonly');
+                const store = tx.objectStore('settings');
+                const req = store.get(key);
+                req.onsuccess = () => resolve(req.result !== undefined ? req.result : defaultValue);
+                req.onerror = () => resolve(defaultValue);
+            });
+        }
+
+        async function dbSetSetting(key, value) {
+            const db = await initDB();
+            return new Promise((resolve, reject) => {
+                const tx = db.transaction('settings', 'readwrite');
+                const store = tx.objectStore('settings');
+                const req = store.put(value, key);
+                req.onsuccess = () => resolve(true);
+                req.onerror = (e) => reject(e.target.error);
+            });
+        }
+
+        async function dbGetAllLogs() {
+            const db = await initDB();
+            return new Promise((resolve) => {
+                const tx = db.transaction('logs', 'readonly');
+                const store = tx.objectStore('logs');
+                const req = store.getAll();
+                req.onsuccess = () => resolve(req.result || []);
+                req.onerror = () => resolve([]);
+            });
+        }
+
+        async function dbAddLog(logObj) {
+            const db = await initDB();
+            return new Promise((resolve, reject) => {
+                const tx = db.transaction('logs', 'readwrite');
+                const store = tx.objectStore('logs');
+                const req = store.put(logObj);
+                req.onsuccess = () => resolve(true);
+                req.onerror = (e) => reject(e.target.error);
+            });
+        }
+
+        async function dbDeleteLog(id) {
+            const db = await initDB();
+            return new Promise((resolve, reject) => {
+                const tx = db.transaction('logs', 'readwrite');
+                const store = tx.objectStore('logs');
+                const req = store.delete(id);
+                req.onsuccess = () => resolve(true);
+                req.onerror = (e) => reject(e.target.error);
+            });
+        }
+
+        async function dbGetQuranImageBlob(pageNum) {
+            const db = await initDB();
+            return new Promise((resolve) => {
+                const tx = db.transaction('quranImages', 'readonly');
+                const store = tx.objectStore('quranImages');
+                const req = store.get(pageNum);
+                req.onsuccess = () => resolve(req.result ? req.result.blob : null);
+                req.onerror = () => resolve(null);
+            });
+        }
+
+        async function dbSaveQuranImageBlob(pageNum, blob) {
+            const db = await initDB();
+            return new Promise((resolve, reject) => {
+                const tx = db.transaction('quranImages', 'readwrite');
+                const store = tx.objectStore('quranImages');
+                const req = store.put({ page: pageNum, blob: blob, timestamp: Date.now() });
+                req.onsuccess = () => resolve(true);
+                req.onerror = (e) => reject(e.target.error);
+            });
+        }
+
+
+        /* ==========================================================================
+           2. QURAN PAGE IMAGE CACHE & SILENT PREFETCHING ENGINE
+           ========================================================================== */
+        const inMemoryBlobUrlCache = {};
+
+        async function getQuranPageObjectUrl(pageNum) {
+            if (pageNum < 1 || pageNum > 604) return null;
+
+            if (inMemoryBlobUrlCache[pageNum]) {
+                return inMemoryBlobUrlCache[pageNum];
+            }
+
+            const cachedBlob = await dbGetQuranImageBlob(pageNum);
+            if (cachedBlob) {
+                const objectUrl = URL.createObjectURL(cachedBlob);
+                inMemoryBlobUrlCache[pageNum] = objectUrl;
+                return objectUrl;
+            }
+
+            const padNum = String(pageNum).padStart(3, '0');
+            const imageUrl = `https://android.quran.com/data/width_1024/page${padNum}.png`;
+
+            try {
+                const response = await fetch(imageUrl);
+                if (!response.ok) throw new Error("Gagal mengambil gambar");
+                const blob = await response.blob();
+
+                dbSaveQuranImageBlob(pageNum, blob).catch(err => console.log("Gagal menyimpan cache", err));
+
+                const objectUrl = URL.createObjectURL(blob);
+                inMemoryBlobUrlCache[pageNum] = objectUrl;
+                return objectUrl;
+            } catch (err) {
+                console.warn(`Fallback URL untuk Halaman ${pageNum}`);
+                return imageUrl;
+            }
+        }
+
+        async function prefetchNeighborPages(currentPage) {
+            const neighborPages = [currentPage + 1, currentPage + 2, currentPage - 1, currentPage - 2];
+            
+            for (const p of neighborPages) {
+                if (p >= 1 && p <= 604 && !inMemoryBlobUrlCache[p]) {
+                    dbGetQuranImageBlob(p).then(async (blob) => {
+                        if (blob) {
+                            inMemoryBlobUrlCache[p] = URL.createObjectURL(blob);
+                        } else {
+                            const padNum = String(p).padStart(3, '0');
+                            const url = `https://android.quran.com/data/width_1024/page${padNum}.png`;
+                            try {
+                                const resp = await fetch(url);
+                                if (resp.ok) {
+                                    const newBlob = await resp.blob();
+                                    await dbSaveQuranImageBlob(p, newBlob);
+                                    inMemoryBlobUrlCache[p] = URL.createObjectURL(newBlob);
+                                }
+                            } catch(e) {}
+                        }
+                    });
+                }
+            }
+        }
+
+
+        /* ==========================================================================
+           3. DARK MODE TOGGLE CONTROLLER
+           ========================================================================== */
+        let isDarkMode = false;
+
+        async function toggleDarkMode() {
+            isDarkMode = !isDarkMode;
+            applyTheme();
+            await dbSetSetting('darkMode', isDarkMode);
+            showToast(isDarkMode ? "Mode Gelap Diaktifkan 🌙" : "Mode Terang Diaktifkan ☀️", "info");
+        }
+
+        function applyTheme() {
+            const htmlEl = document.documentElement;
+            const themeLabel = document.getElementById('themeLabel');
+            const brandIcon = document.getElementById('brandIcon');
+
+            if (isDarkMode) {
+                htmlEl.classList.add('dark');
+                themeLabel.innerText = "Mode Gelap 🌙";
+                themeLabel.className = "font-bold text-amber-400";
+                brandIcon.className = "fa-solid fa-moon text-base sm:text-xl text-amber-300";
+            } else {
+                htmlEl.classList.remove('dark');
+                themeLabel.innerText = "Mode Terang ☀️️";
+                themeLabel.className = "font-bold text-amber-600";
+                brandIcon.className = "fa-solid fa-book-quran text-base sm:text-xl text-amber-300";
+            }
+
+            renderWeeklyChart();
+        }
+
+
+        /* ==========================================================================
+           4. ASTRONOMICAL WAKTU ISTIWA & GPS LOCATION ENGINE
+           ========================================================================== */
+        let userLocation = {
+            latitude: -7.25,
+            longitude: 112.75
+        };
+
+        function requestGPSLocation() {
+            if ("geolocation" in navigator) {
+                showToast("Meminta koordinat GPS...", "info");
+                navigator.geolocation.getCurrentPosition(async (pos) => {
+                    userLocation.latitude = pos.coords.latitude;
+                    userLocation.longitude = pos.coords.longitude;
+                    
+                    await dbSetSetting('userLat', userLocation.latitude);
+                    await dbSetSetting('userLon', userLocation.longitude);
+
+                    showToast(`GPS Terdeteksi: Lat ${userLocation.latitude.toFixed(2)}, Lon ${userLocation.longitude.toFixed(2)}`, "success");
+                    updateIstiwaClock();
+                }, (err) => {
+                    showToast("Izin GPS ditolak. Gunakan lokasi default.", "info");
+                });
+            } else {
+                showToast("Browser tidak mendukung Geolocation.", "info");
+            }
+        }
+
+        function calculateIstiwaTime(dateObj) {
+            const start = new Date(dateObj.getFullYear(), 0, 0);
+            const diff = dateObj - start;
+            const oneDay = 1000 * 60 * 60 * 24;
+            const dayOfYear = Math.floor(diff / oneDay);
+
+            const B = (360 / 365) * (dayOfYear - 81) * (Math.PI / 180);
+            const EoT = 9.87 * Math.sin(2 * B) - 7.53 * Math.cos(B) - 1.5 * Math.sin(B);
+
+            let standardMeridian = 105;
+            if (userLocation.longitude > 112.5 && userLocation.longitude <= 127.5) standardMeridian = 120;
+            else if (userLocation.longitude > 127.5) standardMeridian = 135;
+
+            const zawalMinutesFromMidnight = 12 * 60 + (standardMeridian - userLocation.longitude) * 4 - EoT;
+            const currentLocalMinutes = dateObj.getHours() * 60 + dateObj.getMinutes() + dateObj.getSeconds() / 60;
+
+            const diffMinutes = currentLocalMinutes - zawalMinutesFromMidnight;
+            const istiwaMinutesTotal = 12 * 60 + diffMinutes;
+
+            let istiwaHours = Math.floor(istiwaMinutesTotal / 60) % 24;
+            if (istiwaHours < 0) istiwaHours += 24;
+            const istiwaMinutes = Math.floor(istiwaMinutesTotal % 60);
+            const istiwaSeconds = Math.floor((istiwaMinutesTotal * 60) % 60);
+
+            return `${String(istiwaHours).padStart(2, '0')}:${String(istiwaMinutes).padStart(2, '0')}:${String(istiwaSeconds).padStart(2, '0')}`;
+        }
+
+        function updateIstiwaClock() {
+            const now = new Date();
+            document.getElementById('liveClockLocal').innerText = now.toLocaleTimeString('id-ID');
+            document.getElementById('liveClockIstiwa').innerText = calculateIstiwaTime(now);
+        }
+
+        function getArabicHijriDate(dateObj) {
+            try {
+                const formatter = new Intl.DateTimeFormat('ar-SA-u-ca-islamic-umalqura', {
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric'
+                });
+                return formatter.format(dateObj) + ' هـ';
+            } catch(e) {
+                return '١٤٤٨ هـ';
+            }
+        }
+
+
+        /* ==========================================================================
+           5. WEB AUDIO API SYNTHESIZER
+           ========================================================================== */
+        let audioCtx = null;
+        let alarmIntervalId = null;
+        let ambientOscillator = null;
+        let ambientGainNode = null;
+        let isAmbientPlaying = false;
+
+        function getAudioContext() {
+            if (!audioCtx) {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                audioCtx = new AudioContext();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            return audioCtx;
+        }
+
+        function playChimeNote(freq, type = 'sine', duration = 1.2) {
+            try {
+                const ctx = getAudioContext();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+
+                osc.type = type;
+                osc.frequency.setValueAtTime(freq, ctx.currentTime);
+
+                gain.gain.setValueAtTime(0, ctx.currentTime);
+                gain.gain.linearRampToValueAtTime(0.25, ctx.currentTime + 0.05);
+                gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + duration);
+
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+
+                osc.start();
+                osc.stop(ctx.currentTime + duration);
+            } catch(e) {
+                console.log("Audio play error", e);
+            }
+        }
+
+        function startAlarmAudioLoop() {
+            if (alarmIntervalId) return;
+            const playMelody = () => {
+                const notes = [329.63, 415.30, 493.88, 659.25];
+                notes.forEach((freq, index) => {
+                    setTimeout(() => playChimeNote(freq, 'sine', 1.5), index * 280);
+                });
+            };
+            playMelody();
+            alarmIntervalId = setInterval(playMelody, 3000);
+        }
+
+        function stopAlarmAudioLoop() {
+            if (alarmIntervalId) {
+                clearInterval(alarmIntervalId);
+                alarmIntervalId = null;
+            }
+        }
+
+        function testAlarmSound() {
+            getAudioContext();
+            playChimeNote(440, 'sine', 1.0);
+            setTimeout(() => playChimeNote(554.37, 'sine', 1.2), 200);
+            setTimeout(() => playChimeNote(659.25, 'sine', 1.5), 400);
+            showToast("Suara alarm diuji!", "info");
+        }
+
+        function toggleAmbientSound() {
+            const ctx = getAudioContext();
+            const btn = document.getElementById('ambientSoundToggleBtn');
+
+            if (isAmbientPlaying) {
+                if (ambientGainNode) {
+                    ambientGainNode.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 1);
+                    setTimeout(() => {
+                        if (ambientOscillator) ambientOscillator.stop();
+                        isAmbientPlaying = false;
+                        btn.innerHTML = `<i class="fa-solid fa-play text-[10px] mr-1"></i> Putar Suara`;
+                        btn.classList.remove('bg-emerald-600', 'text-white');
+                    }, 1000);
+                }
+            } else {
+                ambientOscillator = ctx.createOscillator();
+                ambientGainNode = ctx.createGain();
+
+                ambientOscillator.type = 'triangle';
+                ambientOscillator.frequency.setValueAtTime(130.81, ctx.currentTime);
+
+                ambientGainNode.gain.setValueAtTime(0.0001, ctx.currentTime);
+                ambientGainNode.gain.linearRampToValueAtTime(0.08, ctx.currentTime + 2);
+
+                ambientOscillator.connect(ambientGainNode);
+                ambientGainNode.connect(ctx.destination);
+
+                ambientOscillator.start();
+                isAmbientPlaying = true;
+
+                btn.innerHTML = `<i class="fa-solid fa-pause text-[10px] mr-1"></i> Hentikan`;
+                btn.classList.add('bg-emerald-600', 'text-white');
+                showToast("Suara latar tenang diaktifkan", "info");
+            }
+        }
+
+
+        /* ==========================================================================
+           6. DATA SURAH & JUZ AL-QUR'AN
+           ========================================================================== */
+        const ALL_SURAHS = [
+            { id: 1, name: "Al-Fatihah", startPage: 1, juz: 1, verses: 7 },
+            { id: 2, name: "Al-Baqarah", startPage: 2, juz: 1, verses: 286 },
+            { id: 3, name: "Ali 'Imran", startPage: 50, juz: 3, verses: 200 },
+            { id: 4, name: "An-Nisa'", startPage: 77, juz: 4, verses: 176 },
+            { id: 5, name: "Al-Ma'idah", startPage: 106, juz: 6, verses: 120 },
+            { id: 6, name: "Al-An'am", startPage: 128, juz: 7, verses: 165 },
+            { id: 7, name: "Al-A'raf", startPage: 151, juz: 8, verses: 206 },
+            { id: 8, name: "Al-Anfal", startPage: 177, juz: 9, verses: 75 },
+            { id: 9, name: "At-Tawbah", startPage: 187, juz: 10, verses: 129 },
+            { id: 10, name: "Yunus", startPage: 208, juz: 11, verses: 109 },
+            { id: 18, name: "Al-Kahf", startPage: 293, juz: 15, verses: 110 },
+            { id: 36, name: "Yasin", startPage: 440, juz: 22, verses: 83 },
+            { id: 55, name: "Ar-Rahman", startPage: 531, juz: 27, verses: 78 },
+            { id: 56, name: "Al-Waqi'ah", startPage: 534, juz: 27, verses: 96 },
+            { id: 67, name: "Al-Mulk", startPage: 562, juz: 29, verses: 30 },
+            { id: 78, name: "An-Naba'", startPage: 582, juz: 30, verses: 40 },
+            { id: 112, name: "Al-Ikhlas", startPage: 604, juz: 30, verses: 4 },
+            { id: 113, name: "Al-Falaq", startPage: 604, juz: 30, verses: 5 },
+            { id: 114, name: "An-Nas", startPage: 604, juz: 30, verses: 6 }
+        ];
+
+        const ALL_JUZ = Array.from({ length: 30 }, (_, i) => {
+            const juzNum = i + 1;
+            const startP = juzNum === 1 ? 1 : (juzNum - 1) * 20 + 2;
+            return { juz: juzNum, startPage: Math.min(604, startP) };
+        });
+
+        const appState = {
+            todayStr: new Date().toISOString().split('T')[0],
+            targetPages: 2,
+            alarmTime: "18:00",
+            alarmEnabled: true,
+            streak: 0,
+            lastCompletedDate: null,
+            currentQuranPage: 1,
+            logs: []
+        };
+
+        function getTodayString() {
+            return new Date().toISOString().split('T')[0];
+        }
+
+        function calculateTodayPages() {
+            const today = getTodayString();
+            return appState.logs
+                .filter(log => log.date === today)
+                .reduce((sum, log) => sum + log.pagesRead, 0);
+        }
+
+
+        /* ==========================================================================
+           7. APP INITIALIZATION & UI CONTROLLERS
+           ========================================================================== */
+        async function initApp() {
+            await initDB();
+
+            appState.targetPages = await dbGetSetting('targetPages', 2);
+            appState.alarmTime = await dbGetSetting('alarmTime', '18:00');
+            appState.alarmEnabled = await dbGetSetting('alarmEnabled', true);
+            appState.streak = await dbGetSetting('streak', 0);
+            appState.lastCompletedDate = await dbGetSetting('lastCompletedDate', null);
+            appState.currentQuranPage = await dbGetSetting('lastReadPage', 1);
+
+            isDarkMode = await dbGetSetting('darkMode', false);
+            applyTheme();
+
+            userLocation.latitude = await dbGetSetting('userLat', -7.25);
+            userLocation.longitude = await dbGetSetting('userLon', 112.75);
+
+            appState.logs = await dbGetAllLogs();
+
+            document.getElementById('arabicHijriText').innerText = getArabicHijriDate(new Date());
+
+            renderUI();
+            renderWeeklyChart();
+            renderRecentLogs();
+
+            populateSurahCategoryGrid();
+            populateJuzCategoryGrid();
+            populatePageCategoryGrid();
+
+            setupDockMagnification();
+
+            setInterval(() => {
+                updateIstiwaClock();
+                checkAlarmTrigger();
+            }, 1000);
+        }
+
+        function renderUI() {
+            const todayPages = calculateTodayPages();
+            const targetPages = appState.targetPages;
+            const percentage = Math.min(100, Math.round((todayPages / targetPages) * 100));
+
+            const circle = document.getElementById('progressCircle');
+            const radius = circle.r.baseVal.value;
+            const circumference = 2 * Math.PI * radius;
+            const offset = circumference - (percentage / 100) * circumference;
+            circle.style.strokeDasharray = `${circumference} ${circumference}`;
+            circle.style.strokeDashoffset = offset;
+
+            document.getElementById('progressPercent').innerText = `${percentage}%`;
+            document.getElementById('pagesReadToday').innerText = todayPages;
+            document.getElementById('targetPagesTotal').innerText = targetPages;
+            document.getElementById('displayTargetPages').innerText = targetPages;
+            document.getElementById('displayAlarmTime').innerText = appState.alarmTime;
+            document.getElementById('alarmToggle').checked = appState.alarmEnabled;
+            document.getElementById('streakCount').innerText = appState.streak;
+
+            const statusBadge = document.getElementById('statusBadgeText');
+            const statusSub = document.getElementById('progressStatusSub');
+
+            if (todayPages >= targetPages) {
+                statusBadge.innerText = 'Target Tuntas! 🎉';
+                statusBadge.className = 'px-2 py-0.5 rounded-md font-bold bg-emerald-100 dark:bg-emerald-950 text-emerald-900 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800 text-[10px]';
+                statusSub.innerText = 'Alhamdulillah! Target tilawah hari ini sudah tercapai.';
+                checkAndIncrementStreak();
+            } else {
+                statusBadge.innerText = 'Belum Selesai';
+                statusBadge.className = 'px-2 py-0.5 rounded-md font-bold bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 border border-amber-300 dark:border-amber-900 text-[10px]';
+                statusSub.innerText = `Sisa ${targetPages - todayPages} halaman lagi untuk memenuhi target hari ini.`;
+            }
+        }
+
+        async function checkAndIncrementStreak() {
+            const today = getTodayString();
+            if (appState.lastCompletedDate !== today) {
+                appState.streak += 1;
+                appState.lastCompletedDate = today;
+                await dbSetSetting('streak', appState.streak);
+                await dbSetSetting('lastCompletedDate', today);
+                triggerConfetti();
+                showToast(`MasyaAllah! Streak meningkat menjadi ${appState.streak} Hari!`, 'info');
+            }
+        }
+
+
+        /* ==========================================================================
+           8. macOS DOCK MAGNIFICATION EFFECT & TAB SWITCHING
+           ========================================================================== */
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+
+            document.querySelectorAll('.dock-item').forEach(btn => {
+                btn.className = 'dock-item relative group p-2.5 sm:p-3 rounded-2xl bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:text-emerald-800 shadow-sm transition flex flex-col items-center';
+            });
+
+            const activeBtn = document.getElementById(`dockBtn-${tabId}`);
+            if (activeBtn) {
+                activeBtn.className = 'dock-item relative group p-2.5 sm:p-3 rounded-2xl bg-emerald-800 text-white shadow-md transition flex flex-col items-center';
+            }
+
+            if (tabId === 'stats') {
+                setTimeout(renderWeeklyChart, 100);
+            }
+        }
+
+        function setupDockMagnification() {
+            const dock = document.getElementById('macDock');
+            const items = dock.querySelectorAll('.dock-item');
+
+            dock.addEventListener('mousemove', (e) => {
+                const mouseX = e.clientX;
+                items.forEach(item => {
+                    const itemRect = item.getBoundingClientRect();
+                    const itemCenter = itemRect.left + itemRect.width / 2;
+                    const distance = Math.abs(mouseX - itemCenter);
+                    
+                    const maxDistance = 80;
+                    if (distance < maxDistance) {
+                        const scale = 1 + 0.35 * (1 - distance / maxDistance);
+                        item.style.transform = `scale(${scale}) translateY(-${(scale - 1) * 10}px)`;
+                    } else {
+                        item.style.transform = 'scale(1) translateY(0)';
+                    }
+                });
+            });
+
+            dock.addEventListener('mouseleave', () => {
+                items.forEach(item => item.style.transform = 'scale(1) translateY(0)');
+            });
+        }
+
+
+        /* ==========================================================================
+           9. QURAN READER & CATEGORIES SEARCH
+           ========================================================================== */
+        function switchQuranCategory(cat) {
+            document.querySelectorAll('.quran-cat-panel').forEach(p => p.classList.add('hidden'));
+            document.querySelectorAll('.cat-tab-btn').forEach(b => {
+                b.className = 'cat-tab-btn py-1.5 sm:py-2 px-1 text-center rounded-xl transition bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 hover:bg-cream-50 truncate';
+            });
+
+            document.getElementById(`quranCat-${cat}`).classList.remove('hidden');
+            const btn = document.getElementById(`catBtn-${cat}`);
+            btn.className = 'cat-tab-btn py-1.5 sm:py-2 px-1 text-center rounded-xl transition bg-emerald-800 text-white shadow-xs truncate';
+        }
+
+        function populateSurahCategoryGrid() {
+            const grid = document.getElementById('surahListGrid');
+            grid.innerHTML = ALL_SURAHS.map(s => `
+                <button onclick="openQuranReaderModal(${s.startPage})" class="p-2.5 rounded-xl bg-white dark:bg-slate-900 hover:bg-emerald-50 dark:hover:bg-slate-800 border border-slate-200/80 dark:border-slate-800 shadow-xs flex items-center justify-between text-left transition active:scale-95">
+                    <div class="flex items-center gap-2.5 min-w-0">
+                        <span class="w-7 h-7 rounded-lg bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 font-bold text-xs flex items-center justify-center shrink-0">${s.id}</span>
+                        <div class="truncate">
+                            <p class="text-xs font-bold text-slate-800 dark:text-slate-100 truncate">Surah ${s.name}</p>
+                            <p class="text-[9px] text-slate-500 dark:text-slate-400 truncate">${s.verses} Ayat • Juz ${s.juz}</p>
+                        </div>
+                    </div>
+                    <span class="text-[10px] font-bold text-emerald-900 dark:text-emerald-300 bg-emerald-100/60 dark:bg-emerald-950/80 px-2 py-0.5 rounded-md shrink-0">Hal ${s.startPage}</span>
+                </button>
+            `).join('');
+        }
+
+        function filterSurahList(query) {
+            const q = query.toLowerCase();
+            const filtered = ALL_SURAHS.filter(s => s.name.toLowerCase().includes(q) || String(s.id).includes(q));
+            const grid = document.getElementById('surahListGrid');
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `<p class="text-xs text-slate-400 italic py-4 col-span-full text-center">Surah tidak ditemukan.</p>`;
+                return;
+            }
+
+            grid.innerHTML = filtered.map(s => `
+                <button onclick="openQuranReaderModal(${s.startPage})" class="p-2.5 rounded-xl bg-white dark:bg-slate-900 hover:bg-emerald-50 dark:hover:bg-slate-800 border border-slate-200/80 dark:border-slate-800 shadow-xs flex items-center justify-between text-left transition active:scale-95">
+                    <div class="flex items-center gap-2.5 min-w-0">
+                        <span class="w-7 h-7 rounded-lg bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 font-bold text-xs flex items-center justify-center shrink-0">${s.id}</span>
+                        <div class="truncate">
+                            <p class="text-xs font-bold text-slate-800 dark:text-slate-100 truncate">Surah ${s.name}</p>
+                            <p class="text-[9px] text-slate-500 dark:text-slate-400 truncate">${s.verses} Ayat • Juz ${s.juz}</p>
+                        </div>
+                    </div>
+                    <span class="text-[10px] font-bold text-emerald-900 dark:text-emerald-300 bg-emerald-100/60 dark:bg-emerald-950/80 px-2 py-0.5 rounded-md shrink-0">Hal ${s.startPage}</span>
+                </button>
+            `).join('');
+        }
+
+        function populateJuzCategoryGrid() {
+            const grid = document.getElementById('juzListGrid');
+            grid.innerHTML = ALL_JUZ.map(j => `
+                <button onclick="openQuranReaderModal(${j.startPage})" class="p-2.5 rounded-xl bg-white dark:bg-slate-900 hover:bg-amber-50 dark:hover:bg-slate-800 border border-slate-200/80 dark:border-slate-800 shadow-xs flex flex-col items-center text-center transition active:scale-95">
+                    <span class="text-[10px] font-extrabold text-amber-800 dark:text-amber-300 bg-amber-100 dark:bg-amber-950 px-2.5 py-0.5 rounded-full mb-1">Juz ${j.juz}</span>
+                    <span class="text-[10px] font-bold text-slate-700 dark:text-slate-300">Hal ${j.startPage}</span>
+                </button>
+            `).join('');
+        }
+
+        function populatePageCategoryGrid() {
+            const grid = document.getElementById('quickPageGrid');
+            grid.innerHTML = ALL_JUZ.map(j => `
+                <button onclick="openQuranReaderModal(${j.startPage})" class="p-2 text-center rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:border-emerald-500 dark:hover:border-emerald-500 transition shadow-xs active:scale-95">
+                    <span class="block text-[10px] font-bold text-amber-800 dark:text-amber-300">Juz ${j.juz}</span>
+                    <span class="block text-[9px] text-slate-500 dark:text-slate-400">Hal ${j.startPage}</span>
+                </button>
+            `).join('');
+        }
+
+        function openQuranReaderModal(pageNum) {
+            appState.currentQuranPage = Math.max(1, Math.min(604, pageNum || appState.currentQuranPage));
+            loadQuranPageImage(appState.currentQuranPage);
+            document.getElementById('quranReaderModal').classList.remove('hidden');
+        }
+
+        function closeQuranReaderModal() {
+            document.getElementById('quranReaderModal').classList.add('hidden');
+        }
+
+        async function loadQuranPageImage(pageNum) {
+            const imgEl = document.getElementById('mushafImage');
+            imgEl.style.opacity = '0.3';
+
+            const srcUrl = await getQuranPageObjectUrl(pageNum);
+            imgEl.src = srcUrl;
+            imgEl.onload = () => imgEl.style.opacity = '1';
+
+            const estJuz = Math.min(30, Math.floor((pageNum - 2) / 20) + 1);
+            document.getElementById('mushafHeaderSub').innerText = `Halaman ${pageNum} dari 604 (Juz ${estJuz})`;
+            
+            document.getElementById('nextPageNumLabel').innerText = Math.min(604, pageNum + 1);
+            document.getElementById('prevPageNumLabel').innerText = Math.max(1, pageNum - 1);
+
+            dbSetSetting('lastReadPage', pageNum);
+            prefetchNeighborPages(pageNum);
+        }
+
+        function nextQuranPage() {
+            if (appState.currentQuranPage < 604) {
+                appState.currentQuranPage++;
+                loadQuranPageImage(appState.currentQuranPage);
+            }
+        }
+
+        function prevQuranPage() {
+            if (appState.currentQuranPage > 1) {
+                appState.currentQuranPage--;
+                loadQuranPageImage(appState.currentQuranPage);
+            }
+        }
+
+        async function markCurrentPageRead() {
+            await addQuickPagesLog(1, `Tilawah Halaman ${appState.currentQuranPage}`);
+            showToast(`Halaman ${appState.currentQuranPage} berhasil dicatat!`, "info");
+        }
+
+
+        /* ==========================================================================
+           10. PERSISTENT ALARM ENGINE (Anti-Snooze)
+           ========================================================================== */
+        let isAlarmOverlayOpen = false;
+
+        function checkAlarmTrigger() {
+            if (!appState.alarmEnabled) return;
+            const todayPages = calculateTodayPages();
+            if (todayPages >= appState.targetPages) {
+                if (isAlarmOverlayOpen) dismissAlarmOverlay();
+                return;
+            }
+
+            const now = new Date();
+            const currentHM = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+
+            if (currentHM >= appState.alarmTime && !isAlarmOverlayOpen) {
+                triggerPersistentAlarm();
+            }
+        }
+
+        function triggerPersistentAlarm(isSimulation = false) {
+            isAlarmOverlayOpen = true;
+            document.getElementById('alarmModalTargetText').innerText = `${appState.targetPages} Halaman`;
+            document.getElementById('alarmModalReadText').innerText = `${calculateTodayPages()} Halaman`;
+            document.getElementById('persistentAlarmOverlay').classList.remove('hidden');
+            startAlarmAudioLoop();
+            if (isSimulation) showToast("Simulasi alarm dipicu", "info");
+        }
+
+        function dismissAlarmOverlay() {
+            isAlarmOverlayOpen = false;
+            stopAlarmAudioLoop();
+            document.getElementById('persistentAlarmOverlay').classList.add('hidden');
+        }
+
+        function handleAlarmAction(action) {
+            if (action === 'read_now') {
+                dismissAlarmOverlay();
+                switchTab('quran');
+                openQuranReaderModal(appState.currentQuranPage);
+            } else if (action === 'confirm_done') {
+                addQuickPagesLog(appState.targetPages, 'Selesai Target Alarm');
+                dismissAlarmOverlay();
+            }
+        }
+
+        async function toggleAlarmSetting(enabled) {
+            appState.alarmEnabled = enabled;
+            await dbSetSetting('alarmEnabled', enabled);
+            renderUI();
+            showToast(enabled ? "Alarm pengingat diaktifkan" : "Alarm pengingat dinonaktifkan", "info");
+        }
+
+
+        /* ==========================================================================
+           11. LOGS & SETTINGS
+           ========================================================================== */
+        function openAddLogModal() {
+            document.getElementById('addLogModal').classList.remove('hidden');
+        }
+
+        function closeAddLogModal() {
+            document.getElementById('addLogModal').classList.add('hidden');
+        }
+
+        async function addQuickPagesLog(count, notesText) {
+            const today = getTodayString();
+            const now = new Date();
+            const timeStr = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+
+            const newLog = {
+                id: Date.now(),
+                date: today,
+                time: timeStr,
+                pagesRead: count,
+                notes: notesText || `Tilawah (+${count} Hal)`
+            };
+
+            await dbAddLog(newLog);
+            appState.logs.unshift(newLog);
+            renderUI();
+            renderWeeklyChart();
+            renderRecentLogs();
+        }
+
+        async function saveReadingLog(e) {
+            e.preventDefault();
+            const pages = parseInt(document.getElementById('logPagesInput').value, 10);
+            const startP = document.getElementById('logStartPageInput').value;
+            const endP = document.getElementById('logEndPageInput').value;
+            const notes = document.getElementById('logNotesInput').value.trim();
+
+            let detailNotes = notes;
+            if (startP && endP) {
+                detailNotes = detailNotes ? `${detailNotes} (Hal ${startP}-${endP})` : `Hal ${startP}-${endP}`;
+            }
+
+            await addQuickPagesLog(pages, detailNotes || 'Tilawah Harian');
+            closeAddLogModal();
+            showToast(`Berhasil mencatat ${pages} halaman!`, 'info');
+        }
+
+        async function saveSettings(e) {
+            e.preventDefault();
+            const newTarget = parseInt(document.getElementById('settingTargetPages').value, 10);
+            const newTime = document.getElementById('settingAlarmTime').value;
+
+            appState.targetPages = newTarget;
+            appState.alarmTime = newTime;
+
+            await dbSetSetting('targetPages', newTarget);
+            await dbSetSetting('alarmTime', newTime);
+
+            renderUI();
+            renderWeeklyChart();
+            showToast("Pengaturan disimpan!", "info");
+        }
+
+        function renderRecentLogs() {
+            const listEl = document.getElementById('recentLogsList');
+            const today = getTodayString();
+            const todayLogs = appState.logs.filter(log => log.date === today);
+
+            if (todayLogs.length === 0) {
+                listEl.innerHTML = `<p class="text-xs text-slate-400 italic py-1.5">Belum ada catatan hari ini.</p>`;
+                return;
+            }
+
+            listEl.innerHTML = todayLogs.map(log => `
+                <div class="flex items-center justify-between p-2 rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 text-xs shadow-xs">
+                    <div class="flex items-center gap-2">
+                        <span class="w-6 h-6 rounded-xl bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 font-bold flex items-center justify-center text-[10px]">+${log.pagesRead}</span>
+                        <div>
+                            <p class="font-bold text-slate-800 dark:text-slate-200 text-xs">${log.notes}</p>
+                            <p class="text-[9px] text-slate-400">Jam ${log.time}</p>
+                        </div>
+                    </div>
+                    <button onclick="deleteLogItem(${log.id})" class="text-slate-300 hover:text-red-500 transition px-1">
+                        <i class="fa-solid fa-trash-can text-xs"></i>
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        async function deleteLogItem(id) {
+            await dbDeleteLog(id);
+            appState.logs = appState.logs.filter(l => l.id !== id);
+            renderUI();
+            renderWeeklyChart();
+            renderRecentLogs();
+            showToast("Log tilawah dihapus", "info");
+        }
+
+
+        /* ==========================================================================
+           12. FOCUS TIMER ENGINE
+           ========================================================================== */
+        let focusTimerInterval = null;
+        let focusTimeRemaining = 15 * 60;
+        let isFocusRunning = false;
+
+        function setFocusDuration(minutes) {
+            if (isFocusRunning) toggleFocusTimer();
+            focusTimeRemaining = minutes * 60;
+            updateFocusDisplay();
+
+            document.querySelectorAll('.focus-preset-btn').forEach(btn => {
+                btn.className = 'focus-preset-btn px-2.5 py-1 text-xs rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 font-medium hover:border-emerald-500 transition';
+            });
+            event.target.className = 'focus-preset-btn px-2.5 py-1 text-xs rounded-lg border border-emerald-600 bg-emerald-50 dark:bg-emerald-950 text-emerald-900 dark:text-emerald-300 font-bold transition';
+        }
+
+        function updateFocusDisplay() {
+            const mins = String(Math.floor(focusTimeRemaining / 60)).padStart(2, '0');
+            const secs = String(focusTimeRemaining % 60).padStart(2, '0');
+            document.getElementById('focusTimerDisplay').innerText = `${mins}:${secs}`;
+        }
+
+        function toggleFocusTimer() {
+            const btn = document.getElementById('startFocusBtn');
+            const badge = document.getElementById('focusTimerBadge');
+
+            if (isFocusRunning) {
+                clearInterval(focusTimerInterval);
+                isFocusRunning = false;
+                btn.innerHTML = `<i class="fa-solid fa-play"></i> Lanjutkan Timer`;
+                badge.innerText = 'Jeda';
+            } else {
+                getAudioContext();
+                isFocusRunning = true;
+                btn.innerHTML = `<i class="fa-solid fa-pause"></i> Jeda Timer`;
+                badge.innerText = 'Membaca...';
+
+                focusTimerInterval = setInterval(() => {
+                    if (focusTimeRemaining > 0) {
+                        focusTimeRemaining--;
+                        updateFocusDisplay();
+                    } else {
+                        clearInterval(focusTimerInterval);
+                        isFocusRunning = false;
+                        playChimeNote(523.25, 'sine', 2.0);
+                        showToast("Sesi fokus membaca selesai!", "info");
+                        btn.innerHTML = `<i class="fa-solid fa-play"></i> Mulai Timer`;
+                        badge.innerText = 'Selesai';
+                        switchTab('quran');
+                        openQuranReaderModal(appState.currentQuranPage);
+                    }
+                }, 1000);
+            }
+        }
+
+        function resetFocusTimer() {
+            if (isFocusRunning) toggleFocusTimer();
+            focusTimeRemaining = 15 * 60;
+            updateFocusDisplay();
+        }
+
+
+        /* ==========================================================================
+           13. DAILY VERSES COLLECTION & CANVAS CHART
+           ========================================================================== */
+        const VERSES_COLLECTION = [
+            {
+                arabic: "إِنَّ هَٰذَا الْقُرْآنَ يَهْدِي لِلَّتِي هِيَ أَقْوَمُ",
+                translation: "Sungguh, Al-Qur'an ini memberikan petunjuk kepada (jalan) yang lebih lurus..."
+            },
+            {
+                arabic: "وَوَرَتِّلِ الْقُرْآنَ تَرْتِيلًا",
+                translation: "Dan bacalah Al-Qur'an itu dengan perlahan-lahan (tartil)."
+            },
+            {
+                arabic: "خَيْرُكُمْ مَنْ تَعَلَّمَ الْقُرْآنَ وَعَلَّمَهُ",
+                translation: "Sebaik-baik kalian adalah orang yang mempelajari Al-Qur'an dan mengajarkannya."
+            }
+        ];
+
+        function refreshDailyVerse() {
+            const v = VERSES_COLLECTION[Math.floor(Math.random() * VERSES_COLLECTION.length)];
+            document.getElementById('arabicVerseText').innerText = v.arabic;
+            document.getElementById('translationVerseText').innerText = `"${v.translation}"`;
+        }
+
+        function renderWeeklyChart() {
+            const canvas = document.getElementById('weeklyChartCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+
+            const dpr = window.devicePixelRatio || 1;
+            const rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width * dpr;
+            canvas.height = rect.height * dpr;
+            ctx.scale(dpr, dpr);
+
+            const width = rect.width;
+            const height = rect.height;
+            ctx.clearRect(0, 0, width, height);
+
+            const daysData = [];
+            for (let i = 6; i >= 0; i--) {
+                const d = new Date();
+                d.setDate(d.getDate() - i);
+                const dateStr = d.toISOString().split('T')[0];
+                const label = d.toLocaleDateString('id-ID', { weekday: 'short' });
+                const pages = appState.logs
+                    .filter(log => log.date === dateStr)
+                    .reduce((sum, log) => sum + log.pagesRead, 0);
+
+                daysData.push({ label, pages, isToday: i === 0 });
+            }
+
+            const maxPages = Math.max(appState.targetPages + 2, ...daysData.map(d => d.pages));
+            const barWidth = 22;
+            const gap = (width - 30 - (daysData.length * barWidth)) / (daysData.length - 1);
+            const startX = 15;
+            const chartHeight = height - 28;
+
+            daysData.forEach((item, index) => {
+                const x = startX + index * (barWidth + gap);
+                const barH = (item.pages / maxPages) * (chartHeight - 15);
+                const y = chartHeight - barH;
+
+                ctx.fillStyle = item.pages >= appState.targetPages ? (isDarkMode ? '#10B981' : '#0D5C3A') : (item.pages > 0 ? '#F59E0B' : (isDarkMode ? '#334155' : '#E2E8F0'));
+                ctx.beginPath();
+                ctx.roundRect(x, y, barWidth, barH || 4, [6, 6, 0, 0]);
+                ctx.fill();
+
+                ctx.fillStyle = isDarkMode ? '#94A3B8' : '#475569';
+                ctx.font = 'bold 9px Plus Jakarta Sans';
+                ctx.textAlign = 'center';
+                ctx.fillText(item.pages, x + barWidth / 2, y - 4);
+
+                ctx.fillStyle = item.isToday ? (isDarkMode ? '#34D399' : '#0D5C3A') : (isDarkMode ? '#64748B' : '#94A3B8');
+                ctx.font = item.isToday ? 'bold 10px Plus Jakarta Sans' : '9px Plus Jakarta Sans';
+                ctx.fillText(item.label, x + barWidth / 2, height - 6);
+            });
+        }
+
+
+        /* ==========================================================================
+           14. iOS STYLE TOAST & CONFETTI
+           ========================================================================== */
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            
+            toast.className = `ios-toast pointer-events-auto flex items-center gap-3 px-4 py-3 rounded-2xl bg-white/90 dark:bg-slate-900/95 backdrop-blur-xl shadow-2xl border border-amber-200 dark:border-slate-800 text-slate-800 dark:text-slate-100 text-xs font-semibold`;
+            toast.innerHTML = `<div class="w-6 h-6 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 flex items-center justify-center font-bold text-xs">✓</div><span>${message}</span>`;
+            
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(-20px)';
+                toast.style.transition = 'all 0.3s ease';
+                setTimeout(() => toast.remove(), 300);
+            }, 3500);
+        }
+
+        function triggerConfetti() {
+            const canvas = document.getElementById('confettiCanvas');
+            canvas.classList.remove('hidden');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const particles = [];
+            const colors = ['#D4AF37', '#0D5C3A', '#10B981', '#F59E0B'];
+
+            for (let i = 0; i < 60; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height - canvas.height,
+                    size: Math.random() * 6 + 4,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    speedY: Math.random() * 3 + 2,
+                    speedX: Math.random() * 2 - 1
+                });
+            }
+
+            let animationId;
+            const render = () => {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                let active = 0;
+                particles.forEach(p => {
+                    p.y += p.speedY;
+                    p.x += p.speedX;
+                    if (p.y < canvas.height) {
+                        active++;
+                        ctx.fillStyle = p.color;
+                        ctx.fillRect(p.x, p.y, p.size, p.size);
+                    }
+                });
+
+                if (active > 0) animationId = requestAnimationFrame(render);
+                else {
+                    cancelAnimationFrame(animationId);
+                    canvas.classList.add('hidden');
+                }
+            };
+            render();
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            initApp();
+            window.addEventListener('resize', renderWeeklyChart);
+        });
+    </script>
+</body>
+</html>
