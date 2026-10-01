@@ -955,7 +955,7 @@
 
 
         /* ==========================================================================
-           3. DARK MODE & KODULAR NATIVE SETTINGS BRIDGE
+           3. DARK MODE & ANDROID INTENT SETTINGS BRIDGE
            ========================================================================== */
         let isDarkMode = false;
 
@@ -995,35 +995,33 @@
             dbSetSetting('hasSeenPermissionGuide', true);
         }
 
-        /* FUNGSI 1: MEMBUKA PENGATURAN BATERAI & APP INFO VIA KODULAR (OPEN_SETTINGS) */
+        /* MEMBUKA PENGATURAN BATERAI & APP INFO VIA INTENT ANDROID */
         function openAndroidSystemSettings() {
-            if (window.AppInventor) {
-                window.AppInventor.setWebViewString("OPEN_SETTINGS");
-                showToast("Membuka Pengaturan Baterai & App Info...", "info");
-            } else {
-                const packageName = "com.murojaah.hannan";
-                try {
-                    window.location.href = `intent:#Intent;action=android.settings.APPLICATION_DETAILS_SETTINGS;data=package:${packageName};end`;
-                    showToast("Membuka Info Aplikasi...", "info");
-                } catch(e) {
-                    showToast("Silakan buka Pengaturan HP -> Aplikasi -> Murojaah", "info");
-                }
+            const packageName = "com.murojaah.hannan";
+            try {
+                window.location.href = `intent:#Intent;action=android.settings.APPLICATION_DETAILS_SETTINGS;data=package:${packageName};end`;
+                showToast("Membuka Info Aplikasi...", "info");
+            } catch(e) {
+                showToast("Silakan buka Pengaturan HP -> Aplikasi -> Murojaah", "info");
             }
         }
 
-        /* FUNGSI 2: MEMBUKA IZIN TAMPILKAN DI ATAS APP LAIN VIA KODULAR (OPEN_OVERLAY) */
+        /* MEMBUKA IZIN TAMPILKAN DI ATAS APP LAIN VIA INTENT ANDROID */
         function openAndroidOverlaySettings() {
-            if (window.AppInventor) {
-                window.AppInventor.setWebViewString("OPEN_OVERLAY");
-                showToast("Membuka Izin Tampilkan di Atas App Lain...", "info");
-            } else {
-                const packageName = "com.murojaah.hannan";
+            const packageName = "com.murojaah.hannan";
+            try {
+                window.location.href = `intent:#Intent;action=android.settings.action.MANAGE_OVERLAY_PERMISSION;data=package:${packageName};end`;
+                showToast("Membuka Pengaturan Overlay HP...", "info");
+            } catch(e) {
+                showToast("Buka Pengaturan HP -> Aplikasi -> Tampilkan di Atas App Lain", "info");
+            }
+        }
+
+        async function requestWebNotificationPermission() {
+            if ("Notification" in window && Notification.permission !== "granted") {
                 try {
-                    window.location.href = `intent:#Intent;action=android.settings.action.MANAGE_OVERLAY_PERMISSION;data=package:${packageName};end`;
-                    showToast("Membuka Pengaturan Overlay HP...", "info");
-                } catch(e) {
-                    showToast("Buka Pengaturan HP -> Aplikasi -> Tampilkan di Atas App Lain", "info");
-                }
+                    await Notification.requestPermission();
+                } catch(e) {}
             }
         }
 
@@ -1268,6 +1266,7 @@
            ========================================================================== */
         async function initApp() {
             await initDB();
+            await requestWebNotificationPermission();
 
             appState.targetPages = await dbGetSetting('targetPages', 2);
             appState.alarmEnabled = await dbGetSetting('alarmEnabled', true);
@@ -1571,7 +1570,7 @@
 
 
         /* ==========================================================================
-           10. MULTI-ALARM SCHEDULER ENGINE & KODULAR CLOSE SIGNAL
+           10. MULTI-ALARM SCHEDULER ENGINE
            ========================================================================== */
         let isAlarmOverlayOpen = false;
         let lastTriggeredHM = "";
@@ -1599,11 +1598,6 @@
         }
 
         function triggerPersistentAlarm(isSimulation = false, labelText = "Pengingat Murojaah") {
-            // Kirim sinyal ke Kodular untuk membawa aplikasi ke depan layar
-            if (window.AppInventor) {
-                window.AppInventor.setWebViewString("SHOW_ALARM_MODAL");
-            }
-        
             isAlarmOverlayOpen = true;
             document.getElementById('alarmModalTargetText').innerText = `${appState.targetPages} Halaman`;
             document.getElementById('alarmModalNextPageText').innerText = `Halaman ${getNextReadingPage()}`;
@@ -1611,20 +1605,14 @@
             
             startAlarmAudioLoop();
             triggerNativePushBanner(`Waktunya ${labelText}! 📖`, `Target membaca hari ini belum terpenuhi. Lanjut ke Hal ${getNextReadingPage()}!`);
-        
+            
             if (isSimulation) showToast("Simulasi alarm dipicu", "info");
         }
 
-        /* FUNGSI DISMISS DENGAN PENGIRIMAN SINYAL CLOSE_FLOATING KE KODULAR */
         function dismissAlarmOverlay() {
             isAlarmOverlayOpen = false;
             stopAlarmAudioLoop();
             document.getElementById('persistentAlarmOverlay').classList.add('hidden');
-
-            // Kirim sinyal ke Kodular (Web_Viewer2) untuk menutup floating view dan mematikan Player1
-            if (window.AppInventor) {
-                window.AppInventor.setWebViewString("CLOSE_FLOATING");
-            }
         }
 
         function handleAlarmAction(action) {
