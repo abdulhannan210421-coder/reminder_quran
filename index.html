@@ -1599,6 +1599,11 @@
         }
 
         function triggerPersistentAlarm(isSimulation = false, labelText = "Pengingat Murojaah") {
+            // Kirim sinyal ke Kodular untuk membawa aplikasi ke depan layar
+            if (window.AppInventor) {
+                window.AppInventor.setWebViewString("SHOW_ALARM_MODAL");
+            }
+        
             isAlarmOverlayOpen = true;
             document.getElementById('alarmModalTargetText').innerText = `${appState.targetPages} Halaman`;
             document.getElementById('alarmModalNextPageText').innerText = `Halaman ${getNextReadingPage()}`;
@@ -1606,7 +1611,7 @@
             
             startAlarmAudioLoop();
             triggerNativePushBanner(`Waktunya ${labelText}! 📖`, `Target membaca hari ini belum terpenuhi. Lanjut ke Hal ${getNextReadingPage()}!`);
-
+        
             if (isSimulation) showToast("Simulasi alarm dipicu", "info");
         }
 
