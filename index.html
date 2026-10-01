@@ -418,7 +418,7 @@
                         <i class="fa-solid fa-shield-halved text-amber-300 text-lg"></i>
                         <span class="text-left">
                             <span class="block font-bold text-sm">Pengaturan Izin Alarm HP</span>
-                            <span class="block text-[10px] text-emerald-200 font-normal">Klik untuk membuka halaman pengaturan Android</span>
+                            <span class="block text-[10px] text-emerald-200 font-normal">Klik untuk membuka panduan & opsi izin Android</span>
                         </span>
                     </div>
                     <i class="fa-solid fa-chevron-right text-xs text-amber-300"></i>
@@ -485,44 +485,60 @@
     <!-- MODAL AUTOMATIC ANDROID INTENT PERMISSION GUIDE -->
     <div id="permissionGuideModal" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-4 hidden">
         <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-md w-full p-5 sm:p-6 shadow-2xl border-2 border-emerald-500 flex flex-col gap-4 max-h-[92vh] overflow-y-auto">
+            
+            <!-- Header Modal -->
             <div class="text-center space-y-1">
-                <div class="w-12 h-12 rounded-2xl bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 mx-auto flex items-center justify-center text-xl font-bold">
-                    <i class="fa-solid fa-bell"></i>
+                <div class="w-12 h-12 rounded-2xl bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 mx-auto flex items-center justify-center text-xl font-bold shadow-sm">
+                    <i class="fa-solid fa-bell animate-bounce"></i>
                 </div>
-                <h3 class="font-extrabold text-slate-900 dark:text-white text-base">Agar Alarm Selalu Berbunyi Otomatis</h3>
-                <p class="text-xs text-slate-500 dark:text-slate-400">Klik tombol di bawah ini untuk mengaktifkan izin notifikasi & membuka halaman pengaturan baterai HP Anda:</p>
+                <h3 class="font-extrabold text-slate-900 dark:text-white text-base">Atur Izin Alarm Latar Belakang</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400">
+                    Lakukan 2 langkah cepat di bawah ini agar alarm selalu berbunyi tepat waktu:
+                </p>
             </div>
 
-            <div class="space-y-2.5">
-                <!-- Tombol Direct Action 1 -->
-                <button onclick="grantSystemNotifications()" class="w-full py-3 px-4 bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-xs rounded-2xl shadow-md transition active:scale-95 flex items-center justify-between">
+            <!-- Tombol Akses Langsung -->
+            <div class="space-y-3">
+                
+                <!-- Langkah 1: Pengaturan Baterai & App Info -->
+                <div class="p-3 bg-cream-50 dark:bg-slate-800/80 rounded-2xl border border-amber-200/80 dark:border-slate-700 space-y-2">
                     <div class="flex items-center gap-2">
-                        <span class="w-6 h-6 rounded-full bg-emerald-700 text-amber-300 flex items-center justify-center font-bold text-xs">1</span>
-                        <span class="text-left">Aktifkan Pop-up Izin Notifikasi</span>
+                        <span class="w-6 h-6 rounded-full bg-emerald-800 text-amber-300 font-bold text-xs flex items-center justify-center shrink-0">1</span>
+                        <div class="text-xs">
+                            <strong class="block text-slate-900 dark:text-white">Baterai & Hapus Izin</strong>
+                            <span class="text-[10px] text-slate-500 dark:text-slate-400 block">Ubah Baterai ke <b>Unrestricted</b> & matikan <b>Hapus izin jika app tidak digunakan</b>.</span>
+                        </div>
                     </div>
-                    <i class="fa-solid fa-circle-check text-amber-300 text-sm"></i>
-                </button>
+                    <button onclick="openAndroidSystemSettings()" class="w-full py-2.5 px-3 bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-xs rounded-xl transition active:scale-95 flex items-center justify-center gap-2 shadow-md">
+                        <i class="fa-solid fa-battery-full text-amber-300 text-xs"></i>
+                        <span>Buka Pengaturan Baterai & App Info</span>
+                    </button>
+                </div>
 
-                <!-- Tombol Direct Action 2: Memicu Kodular AppInventor Bridge ke Settings HP -->
-                <button onclick="openAndroidSystemSettings()" class="w-full py-3 px-4 bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs rounded-2xl shadow-md transition active:scale-95 flex items-center justify-between">
+                <!-- Langkah 2: Izin Tampilkan Di Atas App Lain -->
+                <div class="p-3 bg-cream-50 dark:bg-slate-800/80 rounded-2xl border border-amber-200/80 dark:border-slate-700 space-y-2">
                     <div class="flex items-center gap-2">
-                        <span class="w-6 h-6 rounded-full bg-amber-600 text-white flex items-center justify-center font-bold text-xs">2</span>
-                        <span class="text-left truncate">
-                            <span class="block font-bold">Buka Pengaturan HP (Baterai)</span>
-                            <span class="block text-[9px] text-amber-100 font-normal">Pilih 'Tanpa Batasan / Unrestricted'</span>
-                        </span>
+                        <span class="w-6 h-6 rounded-full bg-amber-500 text-white font-bold text-xs flex items-center justify-center shrink-0">2</span>
+                        <div class="text-xs">
+                            <strong class="block text-slate-900 dark:text-white">Tampilkan di Atas Aplikasi Lain</strong>
+                            <span class="text-[10px] text-slate-500 dark:text-slate-400 block">Aktifkan sakelar izin agar pop-up alarm bisa muncul otomatis.</span>
+                        </div>
                     </div>
-                    <i class="fa-solid fa-up-right-from-square text-xs"></i>
-                </button>
+                    <button onclick="openAndroidOverlaySettings()" class="w-full py-2.5 px-3 bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs rounded-xl transition active:scale-95 flex items-center justify-center gap-2 shadow-md">
+                        <i class="fa-solid fa-window-restore text-xs"></i>
+                        <span>Buka Izin Tampilkan di Atas App Lain</span>
+                    </button>
+                </div>
+
             </div>
 
             <p class="text-[10px] text-slate-400 text-center italic leading-tight">
-                *Demi keamanan, sistem Android mewajibkan Anda menggeser sakelar Baterai secara manual setelah halaman dibuka.
+                *Demi keamanan, sistem Android mewajibkan Anda menggeser sakelar Baterai & Overlay secara manual.
             </p>
 
-            <div class="pt-2 border-t border-slate-100 dark:border-slate-800">
-                <button onclick="closePermissionGuideModal()" class="w-full py-2.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-300 font-bold text-xs rounded-2xl transition">
-                    Saya Sudah Selesai Mengaturnya / Tutup
+            <div class="pt-1">
+                <button onclick="closePermissionGuideModal()" class="w-full py-2.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-600 dark:text-slate-300 font-bold text-xs rounded-2xl transition">
+                    Saya Sudah Mengatur Semuanya / Tutup
                 </button>
             </div>
         </div>
@@ -979,34 +995,34 @@
             dbSetSetting('hasSeenPermissionGuide', true);
         }
 
-        function grantSystemNotifications() {
-            if ("Notification" in window) {
-                Notification.requestPermission().then(permission => {
-                    if (permission === "granted") {
-                        showToast("Izin Notifikasi HP Diberikan! 🎉", "success");
-                    } else {
-                        showToast("Izin notifikasi telah diminta", "info");
-                    }
-                });
-            } else {
-                showToast("Sistem notifikasi siap", "info");
-            }
-        }
-
-        /* FUNGSI UTAMA MEMBUKA PENGATURAN HP VIA KODULAR APP INVENTOR BRIDGE */
+        /* FUNGSI 1: MEMBUKA PENGATURAN BATERAI & APP INFO VIA KODULAR (OPEN_SETTINGS) */
         function openAndroidSystemSettings() {
             if (window.AppInventor) {
-                // Mengirim pesan 'OPEN_SETTINGS' ke blok Kodular
                 window.AppInventor.setWebViewString("OPEN_SETTINGS");
-                showToast("Membuka Pengaturan HP...", "info");
+                showToast("Membuka Pengaturan Baterai & App Info...", "info");
             } else {
-                // Fallback jika dibuka dari browser biasa
                 const packageName = "com.murojaah.hannan";
                 try {
                     window.location.href = `intent:#Intent;action=android.settings.APPLICATION_DETAILS_SETTINGS;data=package:${packageName};end`;
-                    showToast("Membuka Pengaturan HP...", "info");
+                    showToast("Membuka Info Aplikasi...", "info");
                 } catch(e) {
                     showToast("Silakan buka Pengaturan HP -> Aplikasi -> Murojaah", "info");
+                }
+            }
+        }
+
+        /* FUNGSI 2: MEMBUKA IZIN TAMPILKAN DI ATAS APP LAIN VIA KODULAR (OPEN_OVERLAY) */
+        function openAndroidOverlaySettings() {
+            if (window.AppInventor) {
+                window.AppInventor.setWebViewString("OPEN_OVERLAY");
+                showToast("Membuka Izin Tampilkan di Atas App Lain...", "info");
+            } else {
+                const packageName = "com.murojaah.hannan";
+                try {
+                    window.location.href = `intent:#Intent;action=android.settings.action.MANAGE_OVERLAY_PERMISSION;data=package:${packageName};end`;
+                    showToast("Membuka Pengaturan Overlay HP...", "info");
+                } catch(e) {
+                    showToast("Buka Pengaturan HP -> Aplikasi -> Tampilkan di Atas App Lain", "info");
                 }
             }
         }
