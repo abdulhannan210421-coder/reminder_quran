@@ -5,6 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Murojaah - Pengingat & Reader Al-Qur'an 30 Juz</title>
     
+    <!-- OneSignal Web SDK Integration -->
+    <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+    <script>
+      window.OneSignalDeferred = window.OneSignalDeferred || [];
+      OneSignalDeferred.push(async function(OneSignal) {
+        await OneSignal.init({
+          appId: "e179e14e-4bea-4388-a432-c925586d5bc9",
+          notifyButton: {
+            enable: false,
+          },
+        });
+      });
+    </script>
+
     <!-- Google Fonts: Plus Jakarta Sans & Amiri -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -116,6 +130,16 @@
 
         .animate-pulse-glow {
             animation: pulse-glow 3s infinite ease-in-out;
+        }
+
+        /* Hide native spinner for custom numeric clock inputs */
+        input[type=number]::-webkit-inner-spin-button, 
+        input[type=number]::-webkit-outer-spin-button { 
+            -webkit-appearance: none; 
+            margin: 0; 
+        }
+        input[type=number] {
+            -moz-appearance: textfield;
         }
     </style>
 </head>
@@ -486,7 +510,6 @@
     <div id="permissionGuideModal" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-4 hidden">
         <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-md w-full p-5 sm:p-6 shadow-2xl border-2 border-emerald-500 flex flex-col gap-4 max-h-[92vh] overflow-y-auto">
             
-            <!-- Header Modal -->
             <div class="text-center space-y-1">
                 <div class="w-12 h-12 rounded-2xl bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 mx-auto flex items-center justify-center text-xl font-bold shadow-sm">
                     <i class="fa-solid fa-bell animate-bounce"></i>
@@ -497,10 +520,7 @@
                 </p>
             </div>
 
-            <!-- Tombol Akses Langsung -->
             <div class="space-y-3">
-                
-                <!-- Langkah 1: Pengaturan Baterai & App Info -->
                 <div class="p-3 bg-cream-50 dark:bg-slate-800/80 rounded-2xl border border-amber-200/80 dark:border-slate-700 space-y-2">
                     <div class="flex items-center gap-2">
                         <span class="w-6 h-6 rounded-full bg-emerald-800 text-amber-300 font-bold text-xs flex items-center justify-center shrink-0">1</span>
@@ -515,7 +535,6 @@
                     </button>
                 </div>
 
-                <!-- Langkah 2: Izin Tampilkan Di Atas App Lain -->
                 <div class="p-3 bg-cream-50 dark:bg-slate-800/80 rounded-2xl border border-amber-200/80 dark:border-slate-700 space-y-2">
                     <div class="flex items-center gap-2">
                         <span class="w-6 h-6 rounded-full bg-amber-500 text-white font-bold text-xs flex items-center justify-center shrink-0">2</span>
@@ -529,7 +548,6 @@
                         <span>Buka Izin Tampilkan di Atas App Lain</span>
                     </button>
                 </div>
-
             </div>
 
             <p class="text-[10px] text-slate-400 text-center italic leading-tight">
@@ -563,7 +581,6 @@
                 <img id="mushafImage" src="" alt="Halaman Mushaf Al-Qur'an" class="max-h-[60vh] sm:max-h-[68vh] w-auto object-contain transition-opacity duration-300">
             </div>
 
-            <!-- RTL Navigation -->
             <div class="grid grid-cols-12 gap-2 pt-1">
                 <button onclick="nextQuranPage()" class="col-span-4 py-2.5 sm:py-3 bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-xs rounded-xl shadow-md transition active:scale-95 flex items-center justify-center gap-1.5">
                     <span>Lanjut (Hal <span id="nextPageNumLabel">2</span>)</span>
@@ -672,7 +689,7 @@
     </div>
 
 
-    <!-- MODAL 4: MODERN CUSTOM INTERACTIVE TIME PICKER -->
+    <!-- MODAL 4: MODERN CUSTOM INTERACTIVE TIME PICKER ENHANCED -->
     <div id="addAlarmModal" class="fixed inset-0 z-40 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 hidden">
         <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-sm w-full p-6 shadow-2xl border border-amber-200 dark:border-slate-800 space-y-4">
             <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-2.5">
@@ -684,43 +701,74 @@
                 </button>
             </div>
 
-            <!-- Custom Interactive Digital Clock Selector -->
+            <!-- Enhanced Modern Digital & Analog Hybrid Time Picker -->
             <div class="bg-gradient-to-b from-cream-50 to-white dark:from-slate-800 dark:to-slate-950 p-4 rounded-2xl border border-amber-200/80 dark:border-slate-700 flex flex-col items-center justify-center space-y-3">
-                <div class="flex items-center justify-center gap-2">
-                    <!-- Hours Wheel / Adjuster -->
+                
+                <!-- Time Input Switcher (Direct Native Input Sync + Interactive Steppers) -->
+                <div class="flex items-center justify-center gap-3">
+                    
+                    <!-- Hours Wheel / Direct Input -->
                     <div class="flex flex-col items-center">
-                        <button onclick="adjustPickerHour(1)" class="w-10 h-8 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-bold hover:bg-emerald-100 text-xs transition"><i class="fa-solid fa-chevron-up"></i></button>
-                        <span id="pickerHourDisplay" class="text-4xl font-extrabold font-mono text-emerald-950 dark:text-emerald-300 py-1">18</span>
-                        <button onclick="adjustPickerHour(-1)" class="w-10 h-8 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-bold hover:bg-emerald-100 text-xs transition"><i class="fa-solid fa-chevron-down"></i></button>
+                        <button onclick="adjustPickerHour(1)" class="w-12 h-8 rounded-lg bg-emerald-50 dark:bg-slate-800 text-emerald-800 dark:text-emerald-300 font-bold hover:bg-emerald-100 dark:hover:bg-slate-700 text-xs transition active:scale-95">
+                            <i class="fa-solid fa-chevron-up"></i>
+                        </button>
+                        <input type="number" id="pickerHourInput" min="0" max="23" value="18" 
+                               onchange="onPickerHourInputChange(this.value)"
+                               class="w-16 text-center text-4xl font-extrabold font-mono text-emerald-950 dark:text-emerald-300 bg-transparent focus:outline-none py-1">
+                        <button onclick="adjustPickerHour(-1)" class="w-12 h-8 rounded-lg bg-emerald-50 dark:bg-slate-800 text-emerald-800 dark:text-emerald-300 font-bold hover:bg-emerald-100 dark:hover:bg-slate-700 text-xs transition active:scale-95">
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </button>
                     </div>
 
-                    <span class="text-3xl font-bold text-amber-500 animate-pulse pb-1">:</span>
+                    <span class="text-3xl font-extrabold text-amber-500 animate-pulse pb-1">:</span>
 
-                    <!-- Minutes Wheel / Adjuster -->
+                    <!-- Minutes Wheel / Direct Input -->
                     <div class="flex flex-col items-center">
-                        <button onclick="adjustPickerMin(5)" class="w-10 h-8 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-bold hover:bg-emerald-100 text-xs transition"><i class="fa-solid fa-chevron-up"></i></button>
-                        <span id="pickerMinDisplay" class="text-4xl font-extrabold font-mono text-emerald-950 dark:text-emerald-300 py-1">00</span>
-                        <button onclick="adjustPickerMin(-5)" class="w-10 h-8 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-bold hover:bg-emerald-100 text-xs transition"><i class="fa-solid fa-chevron-down"></i></button>
+                        <button onclick="adjustPickerMin(5)" class="w-12 h-8 rounded-lg bg-emerald-50 dark:bg-slate-800 text-emerald-800 dark:text-emerald-300 font-bold hover:bg-emerald-100 dark:hover:bg-slate-700 text-xs transition active:scale-95">
+                            <i class="fa-solid fa-chevron-up"></i>
+                        </button>
+                        <input type="number" id="pickerMinInput" min="0" max="59" value="00" 
+                               onchange="onPickerMinInputChange(this.value)"
+                               class="w-16 text-center text-4xl font-extrabold font-mono text-emerald-950 dark:text-emerald-300 bg-transparent focus:outline-none py-1">
+                        <button onclick="adjustPickerMin(-5)" class="w-12 h-8 rounded-lg bg-emerald-50 dark:bg-slate-800 text-emerald-800 dark:text-emerald-300 font-bold hover:bg-emerald-100 dark:hover:bg-slate-700 text-xs transition active:scale-95">
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </button>
+                    </div>
+
+                </div>
+
+                <!-- Custom Time Slider for Super Smooth Fine-Tuning -->
+                <div class="w-full px-2 pt-1">
+                    <input type="range" min="0" max="1439" id="timeSliderRange" oninput="onTimeSliderChange(this.value)" 
+                           class="w-full h-1.5 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-emerald-600">
+                    <div class="flex justify-between text-[9px] text-slate-400 font-bold mt-1">
+                        <span>00:00</span>
+                        <span>06:00</span>
+                        <span>12:00</span>
+                        <span>18:00</span>
+                        <span>23:59</span>
                     </div>
                 </div>
 
                 <!-- Quick Presets -->
                 <div class="flex flex-wrap justify-center gap-1.5 pt-1 text-[10px] font-bold">
-                    <button onclick="setPickerTime('04','30')" class="px-2 py-1 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-emerald-500">Subuh 04:30</button>
-                    <button onclick="setPickerTime('12','00')" class="px-2 py-1 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-emerald-500">Dzuhur 12:00</button>
-                    <button onclick="setPickerTime('15','15')" class="px-2 py-1 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-emerald-500">Ashar 15:15</button>
-                    <button onclick="setPickerTime('18','00')" class="px-2 py-1 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-emerald-500">Maghrib 18:00</button>
+                    <button onclick="setPickerTime('04','30')" class="px-2.5 py-1 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-emerald-500 transition shadow-xs">Subuh 04:30</button>
+                    <button onclick="setPickerTime('07','00')" class="px-2.5 py-1 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-emerald-500 transition shadow-xs">Dhuha 07:00</button>
+                    <button onclick="setPickerTime('12','00')" class="px-2.5 py-1 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-emerald-500 transition shadow-xs">Dzuhur 12:00</button>
+                    <button onclick="setPickerTime('15','15')" class="px-2.5 py-1 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-emerald-500 transition shadow-xs">Ashar 15:15</button>
+                    <button onclick="setPickerTime('18','00')" class="px-2.5 py-1 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-emerald-500 transition shadow-xs">Maghrib 18:00</button>
+                    <button onclick="setPickerTime('19','15')" class="px-2.5 py-1 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-emerald-500 transition shadow-xs">Isya' 19:15</button>
                 </div>
             </div>
 
             <div>
-                <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Label Jadwal:</label>
+                <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Label / Nama Jadwal:</label>
                 <input type="text" id="newAlarmLabelInput" placeholder="Misal: Murojaah Subuh / Maghrib" required 
                        class="w-full px-3.5 py-2 bg-cream-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500">
             </div>
 
             <div class="pt-2 flex gap-2">
-                <button type="button" onclick="closeAddAlarmModal()" class="flex-1 py-2.5 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-bold text-xs rounded-xl">Batal</button>
+                <button type="button" onclick="closeAddAlarmModal()" class="flex-1 py-2.5 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-bold text-xs rounded-xl hover:bg-slate-200 transition">Batal</button>
                 <button onclick="submitNewAlarmSchedule()" class="flex-1 py-2.5 bg-gradient-to-r from-amber-500 to-gold-500 hover:from-amber-600 text-white font-bold text-xs rounded-xl shadow-md transition active:scale-95">Simpan Jadwal</button>
             </div>
         </div>
@@ -963,7 +1011,7 @@
             isDarkMode = !isDarkMode;
             applyTheme();
             await dbSetSetting('darkMode', isDarkMode);
-            showToast(isDarkMode ? "Mode Gelap Diaktifkan 🌙" : "Mode Terang Diaktifkan ☀️", "info");
+            showToast(isDarkMode ? "Mode Gelap Diaktifkan 🌙" : "Mode Terang Diaktifkan ☀️️", "info");
         }
 
         function applyTheme() {
@@ -995,7 +1043,6 @@
             dbSetSetting('hasSeenPermissionGuide', true);
         }
 
-        /* MEMBUKA PENGATURAN BATERAI & APP INFO VIA INTENT ANDROID */
         function openAndroidSystemSettings() {
             const packageName = "com.murojaah.hannan";
             try {
@@ -1006,7 +1053,6 @@
             }
         }
 
-        /* MEMBUKA IZIN TAMPILKAN DI ATAS APP LAIN VIA INTENT ANDROID */
         function openAndroidOverlaySettings() {
             const packageName = "com.murojaah.hannan";
             try {
@@ -1297,7 +1343,6 @@
 
             setupDockMagnification();
 
-            // Cek jika pengguna baru pertama kali memasang app -> Munculkan panduan izin HP
             const hasSeenGuide = await dbGetSetting('hasSeenPermissionGuide', false);
             if (!hasSeenGuide) {
                 setTimeout(openPermissionGuideModal, 1200);
@@ -1634,7 +1679,7 @@
 
 
         /* ==========================================================================
-           11. CUSTOM INTERACTIVE TIME PICKER & ALARM MANAGEMENT
+           11. ENHANCED MODERN CUSTOM INTERACTIVE TIME PICKER ENGINE
            ========================================================================== */
         let pickerHour = 18;
         let pickerMin = 0;
@@ -1666,9 +1711,34 @@
             updatePickerDisplay();
         }
 
+        function onPickerHourInputChange(val) {
+            let h = parseInt(val, 10);
+            if (isNaN(h)) h = 0;
+            pickerHour = Math.max(0, Math.min(23, h));
+            updatePickerDisplay();
+        }
+
+        function onPickerMinInputChange(val) {
+            let m = parseInt(val, 10);
+            if (isNaN(m)) m = 0;
+            pickerMin = Math.max(0, Math.min(59, m));
+            updatePickerDisplay();
+        }
+
+        function onTimeSliderChange(val) {
+            const totalMins = parseInt(val, 10);
+            pickerHour = Math.floor(totalMins / 60);
+            pickerMin = totalMins % 60;
+            updatePickerDisplay();
+        }
+
         function updatePickerDisplay() {
-            document.getElementById('pickerHourDisplay').innerText = String(pickerHour).padStart(2, '0');
-            document.getElementById('pickerMinDisplay').innerText = String(pickerMin).padStart(2, '0');
+            document.getElementById('pickerHourInput').value = String(pickerHour).padStart(2, '0');
+            document.getElementById('pickerMinInput').value = String(pickerMin).padStart(2, '0');
+            
+            const totalMins = pickerHour * 60 + pickerMin;
+            const slider = document.getElementById('timeSliderRange');
+            if (slider) slider.value = totalMins;
         }
 
         async function submitNewAlarmSchedule() {
